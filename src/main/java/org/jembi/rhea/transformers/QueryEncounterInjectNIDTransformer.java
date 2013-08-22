@@ -12,6 +12,7 @@ import org.jembi.rhea.Constants;
 import org.jembi.rhea.RestfulHttpResponse;
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.TransformerException;
+import org.mule.api.transport.PropertyScope;
 import org.mule.module.client.MuleClient;
 import org.mule.transformer.AbstractMessageTransformer;
 
@@ -56,53 +57,11 @@ public class QueryEncounterInjectNIDTransformer extends
 			// Replace ECID with original client ID
 			PID pid = oru_r01.getPATIENT_RESULT().getPATIENT().getPID();
 			CX idCX = pid.getPatientIdentifierList(0);
-			String id = msg.getSessionProperty("id");
-			String idType = msg.getSessionProperty("idType");
-			
-			String uuid = msg.getSessionProperty("uuid");
-			String[] id_arr = QueryEncounterInjectECIDTransformer.requestClientIds.get(uuid);
-			idType = id_arr[0];
-			id = id_arr[1];
-			QueryEncounterInjectECIDTransformer.requestClientIds.remove(uuid);
+			String id = msg.getProperty("id", PropertyScope.SESSION);
+			String idType = msg.getProperty("idType", PropertyScope.SESSION);
 			
 			idCX.getIdentifierTypeCode().setValue(idType);
 			idCX.getIDNumber().setValue(id);
-			
-			/*
-			// Replace ECID with Client NID
-			PID pid = oru_r01.getPATIENT_RESULT().getPATIENT().getPID();
-			CX[] patientIdentifierList = pid.getPatientIdentifierList();
-			
-			String nid = null;
-			if (patientIdentifierList.length < 1) {
-				throw new Exception("Invalid client ID");
-			}
-			
-			String id = patientIdentifierList[0].getIDNumber().getValue();
-			String idType = patientIdentifierList[0].getIdentifierTypeCode().getValue();
-			
-			Map<String, String> idMap = new HashMap<String, String>();
-			idMap.put("id", id);
-			idMap.put("idType", idType);
-			
-			MuleMessage responce = client.send("vm://getnid-openempi", idMap, null, 5000);
-			
-			String success = responce.getInboundProperty("success");
-			if (success != null && success.equals("true")) {
-				nid = responce.getPayloadAsString();
-			}
-			
-			if (nid == null) {
-				throw new Exception("Invalid Client: NID for ECID:" + id + " could not be found in Client Registry");
-			} else {
-				// Enrich the message
-				CX idCX = pid.getPatientIdentifierList(0);
-				idCX.getIdentifierTypeCode().setValue(Constants.NID_ID_TYPE);
-				idCX.getIDNumber().setValue(nid);
-				
-				log.info("Validated Client and enriched message with Client NID");
-			}
-			*/
 			
 			// Validate and replace provider id's in each obr
 			for (int i = 0 ; i < oru_r01.getPATIENT_RESULTReps() ; i++) {

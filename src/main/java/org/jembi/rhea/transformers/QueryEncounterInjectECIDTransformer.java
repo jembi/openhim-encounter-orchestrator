@@ -17,8 +17,6 @@ import org.mule.transformer.AbstractMessageTransformer;
 
 public class QueryEncounterInjectECIDTransformer extends AbstractMessageTransformer {
 	
-	public static Map<String, String[]> requestClientIds = new HashMap<String, String[]>();
-	
 	private String requestedAssigningAuthority = "";
 
 	@Override
@@ -62,9 +60,6 @@ public class QueryEncounterInjectECIDTransformer extends AbstractMessageTransfor
 				msg.setProperty("id", id, PropertyScope.SESSION);
 				msg.setProperty("idType", idType, PropertyScope.SESSION);
 				
-				String uuid = req.getUuid();
-				
-				requestClientIds.put(uuid, new String[] {idType, id});
 			} else {
 				throw new InvalidClientIdException("Invalid Client: ECID for id type: " + idType + " with ID: " + id + " could not be found in Client Registry");
 			}
