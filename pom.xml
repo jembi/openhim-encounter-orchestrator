@@ -6,7 +6,7 @@
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>mule</packaging>
 	<name>OpenHIM Encounter Mediator</name>
-	<description>OpenHIM is a open source Health Information Mediator built to facilitate interoperability between disparate Health Information Systems.</description>
+	<description>An orchestrator service for the RHIE OpenHIM implementation to orchestrate encounter transactions</description>
 	<url>http://openhim.org/</url>
 
 	<properties>
