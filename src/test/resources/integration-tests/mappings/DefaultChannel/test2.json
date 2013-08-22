@@ -1,9 +1,0 @@
-{
-	"request": {
-		"urlPattern": "/test/sample2/.+/test2",
-		"method": "GET"
-	},
-	"response": {
-		"status": 200
-	}
-}
