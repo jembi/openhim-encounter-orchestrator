@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jembi.openhim</groupId>
-	<artifactId>openhim</artifactId>
+	<groupId>org.jembi.openhim-encounter-mediator</groupId>
+	<artifactId>openhim-encounter-mediator</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>mule</packaging>
-	<name>OpenHIM</name>
+	<name>OpenHIM Encounter Mediator</name>
 	<description>OpenHIM is a open source Health Information Mediator built to facilitate interoperability between disparate Health Information Systems.</description>
 	<url>http://openhim.org/</url>
 
