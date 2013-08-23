@@ -8,7 +8,7 @@ WireMockPID=$!
 sleep 2s
 
 # Launch soap ui integration testing suite
-$SOAPUI_TESTRUNNER -ehttps://localhost:5000 -utest -ptest -r -f. -I OpenHIM-integration-tests.xml
+$SOAPUI_TESTRUNNER -ehttp://localhost:8081 -utest -ptest -r -f. -I encounter-mediator-integration-tests.xml
 
 # Kill wiremock dead
 kill -HUP $WireMockPID
