@@ -65,7 +65,7 @@ public class mediationQueryEncountersDenormalizationOpenMRSSHRTest extends Funct
 	@Test
 	public void queryEncountersDenormalizationTestValidDates() throws IOException, MuleException{
 		
-		setupWebserviceStub(200, "/openmrs/ws/rest/RHEA/patient/encounters?idType=NID&patientId=1234567890123&dateEnd=31-12-2010&dateStart=02-01-2010", Util.getResourceAsString("oru_r01.xml"));
+		setupWebserviceStub(200, "/openmrs/ws/rest/RHEA/patient/encounters?idType=NID&patientId=1234567890123&dateEnd=2010-12-31T23:59:00&dateStart=2010-01-01T00:00:00", Util.getResourceAsString("oru_r01.xml"));
 		Map<String, Object> properties = null;
 		RestfulHttpRequest req = new RestfulHttpRequest();
 		req.setHttpMethod(RestfulHttpRequest.HTTP_GET);
@@ -74,7 +74,7 @@ public class mediationQueryEncountersDenormalizationOpenMRSSHRTest extends Funct
 		MuleClient client = new MuleClient(muleContext);
 		MuleMessage result = client.send("vm://queryEncounters-De-normailization-OpenMRSSHR",(Object) req, properties);
 		
-		verify(getRequestedFor(urlEqualTo("/openmrs/ws/rest/RHEA/patient/encounters?idType=NID&patientId=1234567890123&dateEnd=31-12-2010&dateStart=02-01-2010")));
+		verify(getRequestedFor(urlEqualTo("/openmrs/ws/rest/RHEA/patient/encounters?idType=NID&patientId=1234567890123&dateEnd=2010-12-31T23:59:00&dateStart=2010-01-01T00:00:00")));
 		Assert.assertTrue(result.getPayload() instanceof RestfulHttpResponse);
 		RestfulHttpResponse resp = (RestfulHttpResponse) result.getPayload();
 	    assertEquals(200, resp.getHttpStatus());

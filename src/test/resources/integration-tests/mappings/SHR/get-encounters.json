@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "url": "/openmrs/ws/rest/RHEA/patient/encounters?idType=ECID&patientId=dc8d2234-7fce-4869-945e-97c8b7d97332&elid=357&dateStart=02-01-1991"
+        "url": "/openmrs/ws/rest/RHEA/patient/encounters?idType=ECID&patientId=dc8d2234-7fce-4869-945e-97c8b7d97332&elid=357&dateStart=1991-01-01T00:00:00"
     },
     "response": {
         "status": 200,

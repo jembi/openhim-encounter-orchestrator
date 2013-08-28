@@ -37,11 +37,11 @@ public class OpenMRSSHROfframpTransformerTest {
 		try {
 			Map<String, String> result = transformer.buildOpenMRSSHRRequestParams("ws/rest/v1/patient/NID-123456789/encounters", requestParams);
 			assertMapValueEquals(result, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_ELID, "1234");
-			assertMapValueEquals(result, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_ENDDATE, "31-01-2013");
+			assertMapValueEquals(result, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_ENDDATE, "2013-01-31T12:00:00");
 			assertMapValueEquals(result, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_NOTIFICATION_TYPE, "TEST");
 			assertMapValueEquals(result, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_PATIENT_ID, "123456789");
 			assertMapValueEquals(result, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_PATIENT_IDTYPE, "NID");
-			assertMapValueEquals(result, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_STARTDATE, "02-01-2013");
+			assertMapValueEquals(result, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_STARTDATE, "2013-01-01T12:00:00");
 		} catch (TransformerException e) {
 			fail();
 		}
@@ -119,47 +119,28 @@ public class OpenMRSSHROfframpTransformerTest {
 	}
 
 	@Test
-	public void testFormatAndSetDateParams_ValidDates() {
-		testValidDates("2013-01-01T12:00:00", "2013-01-31T12:00:00", "02-01-2013", "31-01-2013");
-		testValidDates("2012-12-31T12:00:00", "2013-01-31T12:00:00", "01-01-2013", "31-01-2013");
-		testValidDates("2013-01-31T12:00:00", "2013-02-12T12:00:00", "01-02-2013", "12-02-2013");
-		testValidDates("2012-12-31T12:00:00", "2013-01-31T12:00:00", "01-01-2013", "31-01-2013");
+	public void testSetDateParams_EmptyDates() {
+		testEmptyDates("2013-01-01T12:00:00", "");
+		testEmptyDates("", "2013-01-31T12:00:00");
+		testEmptyDates("", "");
+		testEmptyDates("2013-01-01T12:00:00", null);
+		testEmptyDates(null, "2013-01-31T12:00:00");
+		testEmptyDates(null, null);
 	}
 	
-	private void testValidDates(String start, String end, String expectedStart, String expectedEnd) {
+	private void testEmptyDates(String start, String end) {
 		Map<String, String> targetParams = new HashMap<String, String>();
 		try {
-			transformer.formatAndSetDateParams(targetParams, start, end);
-			assertMapValueEquals(targetParams, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_STARTDATE, expectedStart);
-			assertMapValueEquals(targetParams, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_ENDDATE, expectedEnd);
-		} catch (TransformerException e) {
-			fail();
-		}
-	}
-
-	@Test
-	public void testFormatAndSetDateParams_EmptyDates() {
-		testEmptyDates("2013-01-01T12:00:00", "", "02-01-2013", "");
-		testEmptyDates("", "2013-01-31T12:00:00", "", "31-01-2013");
-		testEmptyDates("", "", "", "");
-		testEmptyDates("2013-01-01T12:00:00", null, "02-01-2013", null);
-		testEmptyDates(null, "2013-01-31T12:00:00", null, "31-01-2013");
-		testEmptyDates(null, null, null, null);
-	}
-	
-	private void testEmptyDates(String start, String end, String expectedStart, String expectedEnd) {
-		Map<String, String> targetParams = new HashMap<String, String>();
-		try {
-			transformer.formatAndSetDateParams(targetParams, start, end);
+			transformer.setDateParams(targetParams, start, end);
 			
 			if (start!=null && !start.isEmpty()) {
-				assertMapValueEquals(targetParams, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_STARTDATE, expectedStart);
+				assertMapValueEquals(targetParams, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_STARTDATE, start);
 			} else {
 				assertTrue(!targetParams.containsKey(OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_STARTDATE));
 			}
 			
 			if (end!=null && !end.isEmpty()) {
-				assertMapValueEquals(targetParams, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_ENDDATE, expectedEnd);
+				assertMapValueEquals(targetParams, OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_ENDDATE, end);
 			} else {
 				assertTrue(!targetParams.containsKey(OpenMRSSHROfframpTransformer.OPENMRS_SHR_PARAM_ENDDATE));
 			}
