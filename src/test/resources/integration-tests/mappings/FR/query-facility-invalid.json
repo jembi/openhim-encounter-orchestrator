@@ -1,0 +1,9 @@
+{
+	"request": {
+		"method": "GET",
+		"url": "/api/collections/26.rss?fosaid=999"
+	},
+	"response": {
+		"status": 404
+	}
+}
