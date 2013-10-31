@@ -32,5 +32,6 @@ return res;]]></scripting:script>
             </otherwise>
         </choice>
         <custom-transformer class="org.jembi.rhea.transformers.RestfulHttpResponseToHttpResponseTransformer" doc:name="Java"/>
+        <http:response-builder status="#[header:OUTBOUND:http.status]" doc:name="HTTP Response Builder"/>
     </flow>
 </mule>
