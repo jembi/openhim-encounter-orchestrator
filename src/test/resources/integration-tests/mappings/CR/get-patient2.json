@@ -4,7 +4,7 @@
         "url": "/openempi-admin/openempi-ws-rest/person-query-resource/findPersonById",
         "bodyPatterns": [
             {
-            	"contains": "1234567890456789"
+            	"contains": "dc8d2234-7fce-4869-945e-97c8b7d97332"
             }
         ]
     },

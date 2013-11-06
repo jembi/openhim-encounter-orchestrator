@@ -4,12 +4,11 @@
         "url": "/openempi-admin/openempi-ws-rest/person-query-resource/findPersonById",
         "bodyPatterns": [
             {
-            	"contains": "1234567890456789"
+            	"contains": "9999999999999999"
             }
         ]
     },
     "response": {
-        "status": 200,
-        "bodyFileName": "/xml/openempi-person.xml"
+        "status": 404
     }
 }
