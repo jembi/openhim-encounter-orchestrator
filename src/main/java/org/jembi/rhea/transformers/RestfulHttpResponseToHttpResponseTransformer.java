@@ -54,13 +54,13 @@ public class RestfulHttpResponseToHttpResponseTransformer extends
 						msg.setPayload("Message orchestration failed, the provider ID failed validation: " + sw.toString());
 					} else {
 						msg.setProperty("http.status", 500, PropertyScope.OUTBOUND);
-						msg.setPayload("A server error has occured, the responce was not of type RestfulHttpResponse, caused by: " + sw.toString());
+						msg.setPayload("A server error has occured, the response was not of type RestfulHttpResponse, caused by: " + sw.toString());
 					}
 				}
 				
 			} else {
 				msg.setProperty("http.status", 500, PropertyScope.OUTBOUND);
-				msg.setPayload("A server error has occured, the responce was not of type RestfulHttpResponse");
+				msg.setPayload("A server error has occured, the response was of type " + payload.getClass().getName() + " instead of the expected type RestfulHttpResponse");
 			}
 			
 			return msg;
