@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jembi.openhim-encounter-mediator</groupId>
 	<artifactId>openhim-encounter-mediator</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.2</version>
 	<packaging>mule</packaging>
 	<name>OpenHIM Encounter Mediator</name>
 	<description>An orchestrator service for the RHIE OpenHIM implementation to orchestrate encounter transactions</description>
