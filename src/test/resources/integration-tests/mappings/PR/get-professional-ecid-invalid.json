@@ -1,0 +1,9 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/webservices/lookupbyid/epid/?id_type=NID&id_number=9999999"
+    },
+    "response": {
+        "status": 404
+    }
+}

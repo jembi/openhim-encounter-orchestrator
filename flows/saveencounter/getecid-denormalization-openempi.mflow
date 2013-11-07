@@ -13,32 +13,33 @@
             <property name="ignore-resource-not-found"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="mediation-getecid-denormalization-openempiFlow1" entity-id="502e90c2-3160-4c97-a3ad-2433919056e6">
+    <flow SubFlow="false" name="mediation-getecid-denormalization-openempiFlow1" entity-id="0cf97d93-ec73-4427-9e5f-2c5308f567d7">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
+            <property name="initialState"/>
             <property name="bussinessEventsLabel"/>
-            <property name="tracking:enable-default-events"/>
             <property name="auxiliary;index" value="2"/>
+            <property name="tracking:enable-default-events"/>
         </properties>
         <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
             <graphicalData x="0" y="0" width="0" height="0"/>
             <endpoint direction="Inbound" message-exchange-pattern="OneWay" name="VM" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
+                    <property name="businessEventsLabel"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="tracking:enable-default-events"/>
                     <property name="ref"/>
                     <property name="transformer-refs"/>
                     <property name="address"/>
-                    <property name="businessEventsLabel"/>
-                    <property name="encoding"/>
                     <property name="path" value="getecid-openempi"/>
+                    <property name="encoding"/>
                     <property name="responseTransformer-refs"/>
-                    <property name="disableTransportTransformer"/>
-                    <property name="mimeType" value="text/plain"/>
-                    <property name="responseTimeout" value="10000"/>
-                    <property name="tracking:enable-default-events"/>
                     <property name="auxiliary;index" value="3"/>
-                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="responseTimeout" value="10000"/>
+                    <property name="mimeType" value="text/plain"/>
                     <property name="connector-ref"/>
                 </properties>
             </endpoint>
@@ -57,8 +58,8 @@
                     <property name="returnClass"/>
                     <property name="ignoreBadInput"/>
                     <property name="encoding"/>
-                    <property name="mimeType"/>
                     <property name="auxiliary;index" value="5"/>
+                    <property name="mimeType"/>
                     <property-collection name="@http://www.mulesoft.org/schema/mule/scripting/script-for-properties;0">
                         <property name="text" value="&#xA;                &#xA;            "/>
                         <property name="engine" value="Groovy"/>
@@ -83,8 +84,8 @@
                     <property name="scope"/>
                     <property name="overwrite"/>
                     <property name="encoding"/>
-                    <property name="mimeType"/>
                     <property name="auxiliary;index" value="8"/>
+                    <property name="mimeType"/>
                     <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                         <property name="value" value="${openempi.sessionkey}"/>
                         <property name="key" value="OPENEMPI_SESSION_KEY"/>
@@ -113,8 +114,8 @@
 <property name="encoding"/>
 <property name="transformerFactoryClass"/>
 <property name="outputEncoding"/>
-<property name="mimeType"/>
 <property name="auxiliary;index" value="12"/>
+<property name="mimeType"/>
 <property name="maxIdleTransformers" value="2"/>
 <property name="uriResolver-ref"/>
                             </properties>
@@ -122,21 +123,21 @@
                         <splitter index="13" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property-collection name="9f56e97c-6a7a-460a-807c-74dd5dbc9070">
+<property-collection name="73769b41-2a4e-446b-a93c-eb19cedca16c">
+    <property name="choice.otherwise" value="true"/>
+    <property-collection name="choice.attributes"/>
+</property-collection>
+<property-collection name="c59d41f0-6df2-4cf8-9999-3d58f8ed78f7">
     <property name="choice.expression" value="message.getInboundProperty('http.status').equals('200')"/>
     <property-collection name="choice.attributes">
         <property name="expression" value="message.getInboundProperty('http.status').equals('200')"/>
         <property name="evaluator" value="groovy"/>
     </property-collection>
 </property-collection>
-<property-collection name="3e4e9430-c483-4599-afeb-93cd38c437af">
-    <property name="choice.otherwise" value="true"/>
-    <property-collection name="choice.attributes"/>
-</property-collection>
                             </properties>
                             <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                             <compartment entity-id="compartment#2">
-<lane hadOnlyOneElement="false" index="15" isChoiceOtherwiseLane="false" entity-id="9f56e97c-6a7a-460a-807c-74dd5dbc9070">
+<lane hadOnlyOneElement="false" index="15" isChoiceOtherwiseLane="false" entity-id="c59d41f0-6df2-4cf8-9999-3d58f8ed78f7">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#1">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -152,8 +153,8 @@
                         <property name="scope"/>
                         <property name="overwrite"/>
                         <property name="encoding"/>
-                        <property name="mimeType"/>
                         <property name="auxiliary;index" value="16"/>
+                        <property name="mimeType"/>
                         <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                             <property name="value" value="true"/>
                             <property name="key" value="success"/>
@@ -166,7 +167,7 @@
         </compartment>
     </scope>
 </lane>
-<lane hadOnlyOneElement="false" index="19" isChoiceOtherwiseLane="true" entity-id="3e4e9430-c483-4599-afeb-93cd38c437af">
+<lane hadOnlyOneElement="false" index="19" isChoiceOtherwiseLane="true" entity-id="73769b41-2a4e-446b-a93c-eb19cedca16c">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#2">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -182,8 +183,8 @@
                         <property name="scope"/>
                         <property name="overwrite"/>
                         <property name="encoding"/>
-                        <property name="mimeType"/>
                         <property name="auxiliary;index" value="20"/>
+                        <property name="mimeType"/>
                         <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                             <property name="value" value="false"/>
                             <property name="key" value="success"/>
@@ -233,9 +234,9 @@
                     <property name="responseTransformer-refs"/>
                     <property name="method"/>
                     <property name="user"/>
+                    <property name="auxiliary;index" value="23"/>
                     <property name="responseTimeout"/>
                     <property name="mimeType" value="application/xml"/>
-                    <property name="auxiliary;index" value="23"/>
                     <property name="connector-ref"/>
                 </properties>
             </endpoint>
@@ -263,8 +264,8 @@
             <property name="scope"/>
             <property name="overwrite"/>
             <property name="encoding"/>
-            <property name="mimeType"/>
             <property name="auxiliary;index" value="26"/>
+            <property name="mimeType"/>
             <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                 <property name="value" value="false"/>
                 <property name="key" value="success"/>

@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "GET",
-		"urlPattern": "/api/collections/26.rss?.*fosaid=[0-9]+.*"
+		"url": "/api/collections/26.rss?fosaid=363"
 	},
 	"response": {
 		"status": 200,
