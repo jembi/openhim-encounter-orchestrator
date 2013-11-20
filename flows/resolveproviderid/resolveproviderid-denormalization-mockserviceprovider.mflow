@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="resolveproviderid-denormalization-mockserviceprovider">
-    <flow SubFlow="false" name="mediation-resolveproviderid-denormalization-mockserviceproviderFlow1" entity-id="a647fd88-df81-4fae-bdb9-97bc5205d9aa">
+    <global-element name="Property Placeholder" type="http://www.springframework.org/schema/context/property-placeholder" entity-id="Property Placeholder#1">
+        <properties>
+            <property name="properties-ref"/>
+            <property name="order"/>
+            <property name="location" value="classpath:encounter-mediator.properties, classpath:encounter-mediator-override.properties"/>
+            <property name="local-override"/>
+            <property name="system-properties-mode"/>
+            <property name="file-encoding"/>
+            <property name="auxiliary;index" value="1"/>
+            <property name="ignore-unresolvable"/>
+            <property name="ignore-resource-not-found"/>
+        </properties>
+    </global-element>
+    <flow SubFlow="false" name="mediation-resolveproviderid-denormalization-mockserviceproviderFlow1" entity-id="b97bf85c-20d6-4c4c-9162-db5c999a2d3c">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
             <property name="initialState"/>
             <property name="bussinessEventsLabel"/>
-            <property name="auxiliary;index" value="1"/>
+            <property name="auxiliary;index" value="2"/>
             <property name="tracking:enable-default-events"/>
         </properties>
         <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
@@ -24,7 +37,7 @@
                     <property name="path" value="resolveproviderid-mock"/>
                     <property name="encoding"/>
                     <property name="responseTransformer-refs"/>
-                    <property name="auxiliary;index" value="2"/>
+                    <property name="auxiliary;index" value="3"/>
                     <property name="responseTimeout" value="10000"/>
                     <property name="mimeType" value="text/plain"/>
                     <property name="connector-ref"/>
@@ -36,30 +49,30 @@
                     <property name="message" value="In Resolve Provider ID mock de-normalization #[groovy: message.toString()]"/>
                     <property name="category"/>
                     <property name="level" value="INFO"/>
-                    <property name="auxiliary;index" value="3"/>
+                    <property name="auxiliary;index" value="4"/>
                 </properties>
             </pattern>
-            <response index="4" entity-id="response#1">
+            <response index="5" entity-id="response#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <compartment entity-id="compartment#1">
                     <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#2">
-                        <splitter index="5" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
+                        <splitter index="6" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property-collection name="3fa8837c-dd9c-4561-af78-ad0f0ba81128">
-    <property name="choice.otherwise" value="true"/>
-    <property-collection name="choice.attributes"/>
-</property-collection>
-<property-collection name="c42bc03c-65b8-4936-a392-29b440aff760">
+<property-collection name="5b905fb7-c3e2-4707-847c-ee2593b02834">
     <property name="choice.expression" value="message.getInboundProperty('http.status').equals('200')"/>
     <property-collection name="choice.attributes">
         <property name="expression" value="message.getInboundProperty('http.status').equals('200')"/>
     </property-collection>
 </property-collection>
+<property-collection name="8a59e1f9-9dd8-4279-b909-23cdfdc26d34">
+    <property name="choice.otherwise" value="true"/>
+    <property-collection name="choice.attributes"/>
+</property-collection>
                             </properties>
                             <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                             <compartment entity-id="compartment#2">
-<lane hadOnlyOneElement="false" index="7" isChoiceOtherwiseLane="false" entity-id="c42bc03c-65b8-4936-a392-29b440aff760">
+<lane hadOnlyOneElement="false" index="8" isChoiceOtherwiseLane="false" entity-id="5b905fb7-c3e2-4707-847c-ee2593b02834">
     <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#1">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -68,18 +81,18 @@
             <property name="scope"/>
             <property name="overwrite"/>
             <property name="encoding"/>
-            <property name="auxiliary;index" value="7"/>
+            <property name="auxiliary;index" value="8"/>
             <property name="mimeType"/>
             <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                 <property name="value" value="true"/>
                 <property name="key" value="success"/>
-                <property name="auxiliary;index" value="8"/>
-                <property name="auxiliary;wrapIn" value="8"/>
+                <property name="auxiliary;index" value="9"/>
+                <property name="auxiliary;wrapIn" value="9"/>
             </property-collection>
         </properties>
     </pattern>
 </lane>
-<lane hadOnlyOneElement="false" index="10" isChoiceOtherwiseLane="true" entity-id="3fa8837c-dd9c-4561-af78-ad0f0ba81128">
+<lane hadOnlyOneElement="false" index="11" isChoiceOtherwiseLane="true" entity-id="8a59e1f9-9dd8-4279-b909-23cdfdc26d34">
     <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#2">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -88,13 +101,13 @@
             <property name="scope"/>
             <property name="overwrite"/>
             <property name="encoding"/>
-            <property name="auxiliary;index" value="10"/>
+            <property name="auxiliary;index" value="11"/>
             <property name="mimeType"/>
             <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                 <property name="value" value="false"/>
                 <property name="key" value="success"/>
-                <property name="auxiliary;index" value="11"/>
-                <property name="auxiliary;wrapIn" value="11"/>
+                <property name="auxiliary;index" value="12"/>
+                <property name="auxiliary;wrapIn" value="12"/>
             </property-collection>
         </properties>
     </pattern>
@@ -107,7 +120,7 @@
 <property name="message" value="In Resolve Provider ID mock de-normalization #[groovy: message.toString()]"/>
 <property name="category"/>
 <property name="level" value="INFO"/>
-<property name="auxiliary;index" value="12"/>
+<property name="auxiliary;index" value="13"/>
                             </properties>
                         </pattern>
                     </lane>
@@ -136,7 +149,7 @@
                     <property name="responseTransformer-refs"/>
                     <property name="method" value="GET"/>
                     <property name="user"/>
-                    <property name="auxiliary;index" value="13"/>
+                    <property name="auxiliary;index" value="14"/>
                     <property name="responseTimeout"/>
                     <property name="mimeType"/>
                     <property name="connector-ref"/>

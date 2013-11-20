@@ -9,7 +9,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 	<context:property-placeholder location="classpath:encounter-mediator.properties, classpath:encounter-mediator-override.properties"/>
     <flow name="http-interfaceFlow1" doc:name="http-interfaceFlow1">
-        <http:inbound-endpoint exchange-pattern="request-response" host="0.0.0.0" port="${encountermeditor.port}" path="ws/rest/v1/patient/" doc:name="HTTP"/>
+        <http:inbound-endpoint exchange-pattern="request-response" host="0.0.0.0" port="${encountermediator.port}" path="ws/rest/v1/patient/" doc:name="HTTP"/>
         <custom-transformer class="org.jembi.rhea.transformers.HttpRequestToRestfulHttpRequestTransformer" doc:name="Java"/>
         <choice doc:name="Choice">
             <when expression="message.payload.path.contains('ws/rest/v1/patient/') &amp;&amp; message.payload.path.contains('/encounter/') &amp;&amp; message.payload.httpMethod.equals('GET')" evaluator="groovy">
