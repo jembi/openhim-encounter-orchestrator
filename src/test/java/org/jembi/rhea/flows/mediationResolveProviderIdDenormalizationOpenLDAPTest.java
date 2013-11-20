@@ -24,7 +24,7 @@ import org.mule.tck.junit4.FunctionalTestCase;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 
-public class mediationGetepidDenormalizationOpenLDAPTest extends
+public class mediationResolveProviderIdDenormalizationOpenLDAPTest extends
 		FunctionalTestCase {
 	
 	private final Log log = LogFactory.getLog(this.getClass());
