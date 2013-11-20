@@ -32,8 +32,8 @@ public class mediationGetepidDenormalizationOpenLDAPTest extends
 	@Rule
 	public WireMockRule wireMockRule = new WireMockRule(8080);
 
-	private void setupWebserviceStub(int httpStatus, String responseBody) {
-		stubFor(get(urlEqualTo("/webservices/lookupbyid/epid/?id_type=NID&id_number=1234567890123456"))
+	private void setupWebserviceStub(int httpStatus, String fromIdType, String toIdType, String responseBody) {
+		stubFor(get(urlEqualTo("/webservices/lookupbyid/" + toIdType.toLowerCase() + "/?id_type=" + fromIdType + "&id_number=1234567890123456"))
 				.withHeader("Accept", equalTo("application/xml"))
 		    	.willReturn(aResponse()
 		    		.withStatus(httpStatus)
@@ -55,29 +55,35 @@ public class mediationGetepidDenormalizationOpenLDAPTest extends
 
 	@Override
 	protected String getConfigResources() {
-		return "src/main/app/getepid-denormalization-openldap.xml";
+		return "src/main/app/resolveproviderid-denormalization-openldap.xml";
 	}
 	
 	@Test
 	public void testSendGetepidDenormalizationOpenLDAP_validRequest() throws Exception {
+		testResolveProviderIdOpenLDAP("NID", "EPID");
+		testResolveProviderIdOpenLDAP("EPID", "NID");
+	}
+	
+	private void testResolveProviderIdOpenLDAP(String fromIdType, String toIdType) throws Exception {
 		log.info("Starting test");
 		
-		String epid = "e8597a14-436f-1031-8b61-8d373bf4f88f";
-		setupWebserviceStub(200, epid);
+		String resultId = "e8597a14-436f-1031-8b61-8d373bf4f88f";
+		setupWebserviceStub(200, fromIdType, toIdType, resultId);
 		
 		MuleClient client = new MuleClient(muleContext);
 		
 		Map<String, String> idMap = new HashMap<String, String>();
 
 	    idMap.put("id", "1234567890123456");
-	    idMap.put("idType", "NID");
+	    idMap.put("idType", fromIdType);
+	    idMap.put("targetIdType", toIdType);
 	    
 	    Map<String, Object> properties = null;
-	    MuleMessage result = client.send("vm://getepid-openldap", idMap, properties);
+	    MuleMessage result = client.send("vm://resolveproviderid-openldap", idMap, properties);
 
 	    assertNotNull(result.getPayload());
 
-	    assertEquals(epid, result.getPayloadAsString());
+	    assertEquals(resultId, result.getPayloadAsString());
 	    
 	    String success = result.getProperty("success", PropertyScope.INBOUND);
 	    assertEquals("true", success);
@@ -87,19 +93,25 @@ public class mediationGetepidDenormalizationOpenLDAPTest extends
 	
 	@Test
 	public void testSendGetepidDenormalizationOpenLDAP_invalidRequest() throws Exception {
+		testResolveProviderIdOpenLDAP_invalidRequest("NID", "EPID");
+		testResolveProviderIdOpenLDAP_invalidRequest("EPID", "NID");
+	}
+
+	private void testResolveProviderIdOpenLDAP_invalidRequest(String fromIdType, String toIdType) throws Exception {
 		log.info("Starting test");
 		
-		setupWebserviceStub(404, "");
+		setupWebserviceStub(404, fromIdType, toIdType, "");
 		
 		MuleClient client = new MuleClient(muleContext);
 		
 		Map<String, String> idMap = new HashMap<String, String>();
 
 	    idMap.put("id", "1234567890123456");
-	    idMap.put("idType", "NID");
+	    idMap.put("idType", fromIdType);
+	    idMap.put("targetIdType", toIdType);
 	    
 	    Map<String, Object> properties = null;
-	    MuleMessage result = client.send("vm://getepid-openldap", idMap, properties);
+	    MuleMessage result = client.send("vm://resolveproviderid-openldap", idMap, properties);
 
 	    assertNotNull(result.getPayload());
 

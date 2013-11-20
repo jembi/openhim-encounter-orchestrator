@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="mediation-getecid-denormalization-mockserviceprovider">
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="resolveproviderid-denormalization-openldap">
     <global-element name="Property Placeholder" type="http://www.springframework.org/schema/context/property-placeholder" entity-id="Property Placeholder#1">
         <properties>
             <property name="properties-ref"/>
@@ -13,39 +13,40 @@
             <property name="ignore-resource-not-found"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="mediation-getnid-denormalization-openldapFlow1" entity-id="89892300-5ff0-4a3f-9947-82fffddb3a3a">
+    <flow SubFlow="false" name="mediation-resolveproviderid-denormalization-openldapFlow1" entity-id="045124d0-5c84-422a-86b9-0b428dded6f9">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
+            <property name="initialState"/>
             <property name="bussinessEventsLabel"/>
-            <property name="tracking:enable-default-events"/>
             <property name="auxiliary;index" value="2"/>
+            <property name="tracking:enable-default-events"/>
         </properties>
         <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
             <graphicalData x="0" y="0" width="0" height="0"/>
             <endpoint direction="Inbound" message-exchange-pattern="OneWay" name="VM" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
+                    <property name="businessEventsLabel"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="tracking:enable-default-events"/>
                     <property name="ref"/>
                     <property name="transformer-refs"/>
                     <property name="address"/>
-                    <property name="businessEventsLabel"/>
+                    <property name="path" value="resolveproviderid-openldap"/>
                     <property name="encoding"/>
-                    <property name="path" value="getnid-openldap"/>
                     <property name="responseTransformer-refs"/>
-                    <property name="disableTransportTransformer"/>
-                    <property name="mimeType" value="text/plain"/>
-                    <property name="responseTimeout" value="10000"/>
-                    <property name="tracking:enable-default-events"/>
                     <property name="auxiliary;index" value="3"/>
-                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="responseTimeout" value="10000"/>
+                    <property name="mimeType" value="text/plain"/>
                     <property name="connector-ref"/>
                 </properties>
             </endpoint>
             <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property name="message" value="In getnid de-normalization for OpenLDAP #[groovy: message.toString()]"/>
+                    <property name="message" value="In Resolve Provider ID de-normalization for OpenLDAP #[groovy: message.toString()]"/>
                     <property name="category"/>
                     <property name="level" value="INFO"/>
                     <property name="auxiliary;index" value="4"/>
@@ -68,10 +69,10 @@
                     <property name="scope"/>
                     <property name="overwrite"/>
                     <property name="encoding"/>
-                    <property name="mimeType"/>
                     <property name="auxiliary;index" value="6"/>
+                    <property name="mimeType"/>
                     <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
-                        <property name="value" value="${pr.auth}"/>
+                        <property name="value" value="${pr.openldap.auth}"/>
                         <property name="key" value="Authorization"/>
                         <property name="auxiliary;index" value="7"/>
                         <property name="auxiliary;wrapIn" value="7"/>
@@ -85,21 +86,21 @@
                         <splitter index="9" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property-collection name="2c57eb09-cf50-4f67-9aaf-1e33c83ee0e7">
+<property-collection name="71223a1b-dd79-459f-86e9-cd89eb983ccf">
     <property name="choice.expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
     <property-collection name="choice.attributes">
         <property name="expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
         <property name="evaluator" value="groovy"/>
     </property-collection>
 </property-collection>
-<property-collection name="cb71e0b9-a5ce-4cb9-b7c3-43abe14b2cdf">
+<property-collection name="98a6f24c-6d8a-481a-a961-926f6f96bf96">
     <property name="choice.otherwise" value="true"/>
     <property-collection name="choice.attributes"/>
 </property-collection>
                             </properties>
                             <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                             <compartment entity-id="compartment#2">
-<lane hadOnlyOneElement="false" index="11" isChoiceOtherwiseLane="false" entity-id="2c57eb09-cf50-4f67-9aaf-1e33c83ee0e7">
+<lane hadOnlyOneElement="false" index="11" isChoiceOtherwiseLane="false" entity-id="71223a1b-dd79-459f-86e9-cd89eb983ccf">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#1">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -115,8 +116,8 @@
                         <property name="scope"/>
                         <property name="overwrite"/>
                         <property name="encoding"/>
-                        <property name="mimeType"/>
                         <property name="auxiliary;index" value="12"/>
+                        <property name="mimeType"/>
                         <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                             <property name="value" value="true"/>
                             <property name="key" value="success"/>
@@ -129,7 +130,7 @@
         </compartment>
     </scope>
 </lane>
-<lane hadOnlyOneElement="false" index="15" isChoiceOtherwiseLane="true" entity-id="cb71e0b9-a5ce-4cb9-b7c3-43abe14b2cdf">
+<lane hadOnlyOneElement="false" index="15" isChoiceOtherwiseLane="true" entity-id="98a6f24c-6d8a-481a-a961-926f6f96bf96">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#2">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -145,8 +146,8 @@
                         <property name="scope"/>
                         <property name="overwrite"/>
                         <property name="encoding"/>
-                        <property name="mimeType"/>
                         <property name="auxiliary;index" value="16"/>
+                        <property name="mimeType"/>
                         <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                             <property name="value" value="false"/>
                             <property name="key" value="success"/>
@@ -164,7 +165,7 @@
                         <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#3">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="message" value="Exitting getnid de-normalization for OpenLDAP #[groovy: message.toString()]"/>
+<property name="message" value="Exiting Resolve Provider ID de-normalization for OpenLDAP #[groovy: message.toString()]"/>
 <property name="category"/>
 <property name="level" value="INFO"/>
 <property name="auxiliary;index" value="18"/>
@@ -191,14 +192,14 @@
                     <property name="transformer-refs"/>
                     <property name="httpLabel"/>
                     <property name="address"/>
-                    <property name="path" value="webservices/lookupbyid/nid/?id_type=#[groovy: return message.payload.get('idType')]&amp;id_number=#[groovy: return message.payload.get('id')]"/>
+                    <property name="path" value="webservices/lookupbyid/#[groovy: return ((String)message.payload.get('targetIdType')).toLowerCase()]/?id_type=#[groovy: return message.payload.get('idType')]&amp;id_number=#[groovy: return message.payload.get('id')]"/>
                     <property name="encoding"/>
                     <property name="responseTransformer-refs"/>
                     <property name="method" value="GET"/>
                     <property name="user"/>
+                    <property name="auxiliary;index" value="19"/>
                     <property name="responseTimeout"/>
                     <property name="mimeType"/>
-                    <property name="auxiliary;index" value="19"/>
                     <property name="connector-ref"/>
                 </properties>
             </endpoint>

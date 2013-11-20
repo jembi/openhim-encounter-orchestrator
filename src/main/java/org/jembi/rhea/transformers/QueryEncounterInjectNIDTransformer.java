@@ -59,6 +59,7 @@ public class QueryEncounterInjectNIDTransformer extends
 			CX idCX = pid.getPatientIdentifierList(0);
 			String id = msg.getProperty("id", PropertyScope.SESSION);
 			String idType = msg.getProperty("idType", PropertyScope.SESSION);
+			String targetIdType = Constants.NID_ID_TYPE;
 			
 			idCX.getIdentifierTypeCode().setValue(idType);
 			idCX.getIDNumber().setValue(id);
@@ -88,8 +89,9 @@ public class QueryEncounterInjectNIDTransformer extends
 					Map<String, String> ProIdMap = new HashMap<String, String>();
 					ProIdMap.put("id", proID);
 					ProIdMap.put("idType", proIDType);
+					ProIdMap.put("targetIdType", targetIdType);
 					
-					MuleMessage responce = client.send("vm://getnid-openldap", ProIdMap, null, 5000);
+					MuleMessage responce = client.send("vm://resolveproviderid", ProIdMap, null, 5000);
 					
 					String nid = null;
 					String success = responce.getInboundProperty("success");
@@ -98,9 +100,9 @@ public class QueryEncounterInjectNIDTransformer extends
 						
 						// Enrich message
 						orderingProvider.getIDNumber().setValue(nid);
-						orderingProvider.getIdentifierTypeCode().setValue(Constants.NID_ID_TYPE);
+						orderingProvider.getIdentifierTypeCode().setValue(targetIdType);
 					} else {
-						throw new Exception("Invalid Provider: NID for EPID:" + proID + " could not be found in Provier Registry");
+						throw new Exception("Invalid Provider: NID for EPID:" + proID + " could not be found in Provider Registry");
 					}
 				}
 			}
