@@ -10,7 +10,7 @@ import org.mule.api.transformer.TransformerException;
 import org.mule.api.transport.PropertyScope;
 
 public class CSDResolveProviderIDResponseTransformerTest {
-	private static final String RESPONSE =
+	static final String RESPONSE =
 		"<CSD xmlns=\"urn:ihe:iti:csd:2013\" xmlns:csd=\"urn:ihe:iti:csd:2013\">\n" +
 		"  <organizationDirectory/>\n" +
 		"  <serviceDirectory/>\n" +

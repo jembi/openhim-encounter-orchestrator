@@ -30,6 +30,6 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
         <custom-transformer class="org.jembi.rhea.transformers.CSDResolveProviderIDOffRampTransformer" doc:name="Offramp-Transformer">
             <spring:property name="assigningAuthorityOIDS" value="${pr.csd.assigningAuthorityOIDS}"/>
         </custom-transformer>
-        <http:outbound-endpoint exchange-pattern="request-response" host="${pr.host}" port="${pr.port}" path="careServicesRequest" method="GET" doc:name="HTTP" mimeType="text/xml"/>
+        <http:outbound-endpoint exchange-pattern="request-response" host="${pr.host}" port="${pr.port}" path="CSD/careServicesRequest" method="GET" doc:name="HTTP" mimeType="text/xml"/>
     </flow>
 </mule>
