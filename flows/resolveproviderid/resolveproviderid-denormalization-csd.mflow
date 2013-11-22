@@ -13,7 +13,7 @@
             <property name="ignore-resource-not-found"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="mediation-resolveproviderid-denormalization-csd" entity-id="86716e97-3d39-48f6-8663-05cde4e293c7">
+    <flow SubFlow="false" name="mediation-resolveproviderid-denormalization-csd" entity-id="bd6edf3c-a50e-40d8-8270-bc379229d7ca">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -25,7 +25,7 @@
         <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
             <graphicalData x="0" y="0" width="0" height="0"/>
             <endpoint direction="Inbound" message-exchange-pattern="OneWay" name="VM" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#1">
-                <graphicalData x="19" y="38" width="68" height="320"/>
+                <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="businessEventsLabel"/>
                     <property name="disableTransportTransformer"/>
@@ -44,7 +44,7 @@
                 </properties>
             </endpoint>
             <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
-                <graphicalData x="147" y="38" width="68" height="71"/>
+                <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="message" value="In Resolve Provider ID de-normalization for CSD #[groovy: message.toString()]"/>
                     <property name="category"/>
@@ -53,7 +53,7 @@
                 </properties>
             </pattern>
             <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#2">
-                <graphicalData x="275" y="38" width="68" height="71"/>
+                <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="message" value="Length: #[groovy: message.getPayloadAsString().length()]"/>
                     <property name="category"/>
@@ -62,18 +62,27 @@
                 </properties>
             </pattern>
             <response index="6" entity-id="response#1">
-                <graphicalData x="403" y="159" width="532" height="346"/>
+                <graphicalData x="0" y="0" width="0" height="0"/>
                 <compartment entity-id="compartment#1">
                     <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#2">
-                        <splitter index="7" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
+                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#3">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name=";INDEX" value="7"/>
-<property-collection name="f08b8f6f-f8f1-4cdf-af79-bf12145c42f0">
+<property name="message" value="Response: #[groovy: message.toString()]"/>
+<property name="category"/>
+<property name="level" value="INFO"/>
+<property name="auxiliary;index" value="7"/>
+                            </properties>
+                        </pattern>
+                        <splitter index="8" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name=";INDEX" value="8"/>
+<property-collection name="20aa60c7-ecfa-45b8-99d7-dca227fc84bb">
     <property name="choice.otherwise" value="true"/>
     <property-collection name="choice.attributes"/>
 </property-collection>
-<property-collection name="b170571f-c9c2-4ea5-99c5-4730f397e6aa">
+<property-collection name="688b2945-98c2-420b-a9fd-26589d3b5cd7">
     <property name="choice.expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
     <property-collection name="choice.attributes">
         <property name="expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
@@ -83,12 +92,12 @@
                             </properties>
                             <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2">
 <properties>
-    <property name=";INDEX" value="7"/>
-    <property-collection name="f08b8f6f-f8f1-4cdf-af79-bf12145c42f0">
+    <property name=";INDEX" value="8"/>
+    <property-collection name="20aa60c7-ecfa-45b8-99d7-dca227fc84bb">
         <property name="choice.otherwise" value="true"/>
         <property-collection name="choice.attributes"/>
     </property-collection>
-    <property-collection name="b170571f-c9c2-4ea5-99c5-4730f397e6aa">
+    <property-collection name="688b2945-98c2-420b-a9fd-26589d3b5cd7">
         <property name="choice.expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
         <property-collection name="choice.attributes">
             <property name="expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
@@ -98,38 +107,30 @@
 </properties>
                             </pattern>
                             <compartment entity-id="compartment#2">
-<lane hadOnlyOneElement="false" index="9" isChoiceOtherwiseLane="false" entity-id="b170571f-c9c2-4ea5-99c5-4730f397e6aa">
+<lane hadOnlyOneElement="false" index="10" isChoiceOtherwiseLane="false" entity-id="688b2945-98c2-420b-a9fd-26589d3b5cd7">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#1">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
-            <property name="auxiliary;index" value="9"/>
+            <property name="auxiliary;index" value="10"/>
         </properties>
         <compartment entity-id="compartment#3">
             <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#3">
-                <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#1">
+                <pattern name="Process Response" type="org.mule.tooling.ui.modules.core.pattern.customTransformer" entity-id="Java#1">
                     <graphicalData x="0" y="0" width="0" height="0"/>
                     <properties>
                         <property name="returnClass"/>
                         <property name="ignoreBadInput"/>
-                        <property name="scope"/>
-                        <property name="overwrite"/>
                         <property name="encoding"/>
-                        <property name="auxiliary;index" value="10"/>
+                        <property name="class" value="org.jembi.rhea.transformers.CSDResolveProviderIDResponseTransformer"/>
+                        <property name="auxiliary;index" value="11"/>
                         <property name="mimeType"/>
-                        <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
-                            <property name="value" value="true"/>
-                            <property name="isProcessed$$$$" value="true"/>
-                            <property name="key" value="success"/>
-                            <property name="auxiliary;index" value="11"/>
-                            <property name="auxiliary;wrapIn" value="11"/>
-                        </property-collection>
                     </properties>
                 </pattern>
             </lane>
         </compartment>
     </scope>
 </lane>
-<lane hadOnlyOneElement="false" index="13" isChoiceOtherwiseLane="true" entity-id="f08b8f6f-f8f1-4cdf-af79-bf12145c42f0">
+<lane hadOnlyOneElement="false" index="13" isChoiceOtherwiseLane="true" entity-id="20aa60c7-ecfa-45b8-99d7-dca227fc84bb">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#2">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -137,7 +138,7 @@
         </properties>
         <compartment entity-id="compartment#4">
             <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#4">
-                <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#2">
+                <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#1">
                     <graphicalData x="0" y="0" width="0" height="0"/>
                     <properties>
                         <property name="returnClass"/>
@@ -162,7 +163,7 @@
 </lane>
                             </compartment>
                         </splitter>
-                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#3">
+                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#4">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
 <property name="message" value="Exiting Resolve Provider ID de-normalization for CSD #[groovy: message.toString()]"/>
@@ -174,7 +175,7 @@
                     </lane>
                 </compartment>
             </response>
-            <pattern name="Offramp-Transformer" type="http://www.mulesoft.org/schema/mule/core/custom-transformer" entity-id="8cb1118d-8859-416a-bf5f-bd2d0e763767">
+            <pattern name="Offramp-Transformer" type="org.mule.tooling.ui.modules.core.pattern.customTransformer" entity-id="Java#2">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="auxiliary;erased;mimeType" value="true"/>
@@ -184,18 +185,20 @@
                     <property name="auxiliary;erased;encoding" value="true"/>
                     <property name="encoding" value=""/>
                     <property name="class" value="org.jembi.rhea.transformers.CSDResolveProviderIDOffRampTransformer"/>
+                    <property name="auxiliary;index" value="17"/>
                     <property name="mimeType" value=""/>
-                    <property-collection name="@http://www.springframework.org/schema/beans/property;1134410640">
-                        <property name="ref" value=""/>
-                        <property name="name" value="providerIdTypeOIDS"/>
-                        <property name="value" value="${pr.csd.providerIdTypeOIDS}"/>
+                    <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                        <property name="name" value="assigningAuthorityOIDS"/>
+                        <property name="value" value="${pr.csd.assigningAuthorityOIDS}"/>
                         <property name="isProcessed$$$$" value="true"/>
+                        <property name="auxiliary;index" value="18"/>
+                        <property name="auxiliary;wrapIn" value="18"/>
                     </property-collection>
                 </properties>
                 <description></description>
             </pattern>
             <endpoint direction="Outbound" message-exchange-pattern="RequestResponse" name="HTTP" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#1">
-                <graphicalData x="995" y="38" width="68" height="71"/>
+                <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="port" value="${pr.port}"/>
                     <property name="host" value="${pr.host}"/>
@@ -217,9 +220,9 @@
                     <property name="responseTransformer-refs"/>
                     <property name="method" value="GET"/>
                     <property name="user"/>
-                    <property name="auxiliary;index" value="17"/>
+                    <property name="auxiliary;index" value="19"/>
                     <property name="responseTimeout"/>
-                    <property name="mimeType"/>
+                    <property name="mimeType" value="text/xml"/>
                     <property name="connector-ref"/>
                 </properties>
             </endpoint>
