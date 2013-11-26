@@ -13,10 +13,11 @@
             <property name="ignore-resource-not-found"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="validatetfacility-denormalization-resourcemapFlow1" entity-id="368bbc58-589f-4ad6-b060-49ab83fbc1fe">
+    <flow SubFlow="false" name="validatetfacility-denormalization-resourcemapFlow1" entity-id="b8e75656-96f2-4169-833e-836ccce46e2a">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
+            <property name="initialState"/>
             <property name="bussinessEventsLabel"/>
             <property name="auxiliary;index" value="2"/>
             <property name="tracking:enable-default-events"/>
@@ -95,11 +96,11 @@
                         <splitter index="10" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property-collection name="a9091f3a-7eea-47bf-a893-316e4462e75c">
+<property-collection name="b70b761b-c7a7-401f-bccf-46b90a770f74">
     <property name="choice.otherwise" value="true"/>
     <property-collection name="choice.attributes"/>
 </property-collection>
-<property-collection name="d4205661-87b7-4916-a543-60b748e02fc8">
+<property-collection name="22f8c32f-4ac4-406b-bc57-42fc0f732fe0">
     <property name="choice.expression" value="message.getPayloadAsString().contains('&lt;facilityReport&gt;')"/>
     <property-collection name="choice.attributes">
         <property name="expression" value="message.getPayloadAsString().contains('&lt;facilityReport&gt;')"/>
@@ -109,7 +110,7 @@
                             </properties>
                             <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                             <compartment entity-id="compartment#2">
-<lane hadOnlyOneElement="false" index="12" isChoiceOtherwiseLane="false" entity-id="d4205661-87b7-4916-a543-60b748e02fc8">
+<lane hadOnlyOneElement="false" index="12" isChoiceOtherwiseLane="false" entity-id="22f8c32f-4ac4-406b-bc57-42fc0f732fe0">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#1">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -139,7 +140,7 @@
         </compartment>
     </scope>
 </lane>
-<lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="true" entity-id="a9091f3a-7eea-47bf-a893-316e4462e75c">
+<lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="true" entity-id="b70b761b-c7a7-401f-bccf-46b90a770f74">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#2">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -277,7 +278,6 @@
                 </compartment>
             </scope>
         </lane>
-        <apikit>false</apikit>
     </flow>
     <description></description>
 </mule-configuration>
