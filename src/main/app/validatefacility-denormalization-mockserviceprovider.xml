@@ -5,8 +5,8 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
     <flow name="validatetfacility-denormalization-mockserviceproviderFlow1" doc:name="validatetfacility-denormalization-mockserviceproviderFlow1">
-        <vm:inbound-endpoint exchange-pattern="request-response" path="validateFacility" responseTimeout="10000" mimeType="text/plain" doc:name="VM"/>
-        <logger message="In validateFacility de-normalization" level="INFO" doc:name="Logger"/>
+        <vm:inbound-endpoint exchange-pattern="request-response" path="validateFacility-mock" responseTimeout="10000" mimeType="text/plain" doc:name="VM"/>
+        <logger message="In validateFacility Mock de-normalization" level="INFO" doc:name="Logger"/>
         <echo-component doc:name="Echo"/>
         <response>
             <choice doc:name="Choice">
@@ -21,7 +21,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
                     </message-properties-transformer>
                 </otherwise>
             </choice>
-            <logger message="Exitting validteFacility de-normalization" level="INFO" doc:name="Logger"/>
+            <logger message="Exiting validateFacility Mock de-normalization" level="INFO" doc:name="Logger"/>
             <echo-component doc:name="Echo"/>
         </response>
         <http:outbound-endpoint exchange-pattern="request-response" host="localhost" port="8000" path="ws/rest/v1/facility/#[groovy: return message.payload]" method="GET" doc:name="HTTP"/>

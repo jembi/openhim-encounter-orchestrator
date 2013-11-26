@@ -13,7 +13,7 @@
             <property name="ignore-resource-not-found"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="validatetfacility-denormalization-resourcemapFlow1" entity-id="b8e75656-96f2-4169-833e-836ccce46e2a">
+    <flow SubFlow="false" name="validatetfacility-denormalization-resourcemapFlow1" entity-id="1e366b53-2bdb-48c5-a4cf-d908fadd5dc5">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -65,7 +65,7 @@
                         <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="message" value="Responce recieved from resource map: #[groovy: message.toString();]"/>
+<property name="message" value="Response recieved from resource map: #[groovy: message.toString();]"/>
 <property name="category"/>
 <property name="level" value="INFO"/>
 <property name="auxiliary;index" value="7"/>
@@ -96,21 +96,21 @@
                         <splitter index="10" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property-collection name="b70b761b-c7a7-401f-bccf-46b90a770f74">
-    <property name="choice.otherwise" value="true"/>
-    <property-collection name="choice.attributes"/>
-</property-collection>
-<property-collection name="22f8c32f-4ac4-406b-bc57-42fc0f732fe0">
+<property-collection name="d55a7909-d607-4253-a0db-5ab47081bb3c">
     <property name="choice.expression" value="message.getPayloadAsString().contains('&lt;facilityReport&gt;')"/>
     <property-collection name="choice.attributes">
         <property name="expression" value="message.getPayloadAsString().contains('&lt;facilityReport&gt;')"/>
         <property name="evaluator" value="groovy"/>
     </property-collection>
 </property-collection>
+<property-collection name="ba589260-b6db-44aa-a61c-e480ef5ca609">
+    <property name="choice.otherwise" value="true"/>
+    <property-collection name="choice.attributes"/>
+</property-collection>
                             </properties>
                             <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                             <compartment entity-id="compartment#2">
-<lane hadOnlyOneElement="false" index="12" isChoiceOtherwiseLane="false" entity-id="22f8c32f-4ac4-406b-bc57-42fc0f732fe0">
+<lane hadOnlyOneElement="false" index="12" isChoiceOtherwiseLane="false" entity-id="d55a7909-d607-4253-a0db-5ab47081bb3c">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#1">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -140,7 +140,7 @@
         </compartment>
     </scope>
 </lane>
-<lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="true" entity-id="b70b761b-c7a7-401f-bccf-46b90a770f74">
+<lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="true" entity-id="ba589260-b6db-44aa-a61c-e480ef5ca609">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#2">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -175,7 +175,7 @@
                         <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#3">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="message" value="Exitting validateFacility de-normalization for resource map"/>
+<property name="message" value="Exiting validateFacility de-normalization for resource map"/>
 <property name="category"/>
 <property name="level" value="INFO"/>
 <property name="auxiliary;index" value="19"/>
@@ -201,7 +201,7 @@
                     <property name="auxiliary;index" value="21"/>
                     <property name="mimeType"/>
                     <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
-                        <property name="value" value="${fr.auth}"/>
+                        <property name="value" value="${fr.resmap.auth}"/>
                         <property name="key" value="Authorization"/>
                         <property name="auxiliary;index" value="22"/>
                         <property name="auxiliary;wrapIn" value="22"/>

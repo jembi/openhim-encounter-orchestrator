@@ -12,7 +12,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
         <logger message="In validateFacility de-normalization for resource map" level="INFO" doc:name="Logger"/>
         <echo-component doc:name="Echo"/>
         <response>
-            <logger message="Responce recieved from resource map: #[groovy: message.toString();]" level="INFO" doc:name="Logger"/>
+            <logger message="Response recieved from resource map: #[groovy: message.toString();]" level="INFO" doc:name="Logger"/>
             <mulexml:xslt-transformer maxIdleTransformers="2" maxActiveTransformers="5" xsl-file="xslt/ResMap-rss-to-rhea-custom.xsl" doc:name="XSLT"/>
             <echo-component doc:name="Echo"/>
             <choice doc:name="Choice">
@@ -31,11 +31,11 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
                     </processor-chain>
                 </otherwise>
             </choice>
-            <logger message="Exitting validateFacility de-normalization for resource map" level="INFO" doc:name="Logger"/>
+            <logger message="Exiting validateFacility de-normalization for resource map" level="INFO" doc:name="Logger"/>
             <echo-component doc:name="Echo"/>
         </response>
         <message-properties-transformer doc:name="Message Properties">
-            <add-message-property key="Authorization" value="${fr.auth}"/>
+            <add-message-property key="Authorization" value="${fr.resmap.auth}"/>
         </message-properties-transformer>
         <http:outbound-endpoint exchange-pattern="request-response" host="${fr.host}" port="${fr.port}" path="api/collections/${fr.resmap.collection.id}.rss?fosaid=#[groovy: return message.payload]" method="GET" doc:name="HTTP"/>
         <catch-exception-strategy doc:name="Catch Exception Strategy">
