@@ -13,7 +13,7 @@
             <property name="ignore-resource-not-found"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="resolveproviderid-denormalizationFlow1" entity-id="9e1a879a-edc2-4d9e-9936-a3edcd36e0ff">
+    <flow SubFlow="false" name="resolveproviderid-denormalizationFlow1" entity-id="68e54399-4900-4dd3-91aa-3938abc4ec0e">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -46,23 +46,23 @@
             <splitter index="4" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property-collection name="b2aa1ebe-f68f-46d6-ac10-8580b2784568">
-                        <property name="choice.expression" value="&quot;csd&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
-                        <property-collection name="choice.attributes">
-                            <property name="expression" value="&quot;csd&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
-                        </property-collection>
+                    <property-collection name="41647cce-7750-46ec-ac0c-fa5a91f4e593">
+                        <property name="choice.otherwise" value="true"/>
+                        <property-collection name="choice.attributes"/>
                     </property-collection>
-                    <property-collection name="c49bbf6f-c949-4303-b2ce-35cc7b288156">
+                    <property-collection name="004e4f13-1e28-412a-b0ed-1f91d505afba">
                         <property name="choice.expression" value="&quot;mock&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
                         <property-collection name="choice.attributes">
                             <property name="expression" value="&quot;mock&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
                         </property-collection>
                     </property-collection>
-                    <property-collection name="f5d4c1ad-faba-46d4-905e-09879173e80f">
-                        <property name="choice.otherwise" value="true"/>
-                        <property-collection name="choice.attributes"/>
+                    <property-collection name="7b95d810-8c8a-4555-9ea0-850307579e48">
+                        <property name="choice.expression" value="&quot;csd&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="&quot;csd&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
+                        </property-collection>
                     </property-collection>
-                    <property-collection name="d5e337dc-a53f-4412-be17-87e689ef14df">
+                    <property-collection name="35193403-42d3-4d4d-8ad0-74be7b5ce46e">
                         <property name="choice.expression" value="&quot;openldap&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
                         <property-collection name="choice.attributes">
                             <property name="expression" value="&quot;openldap&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
@@ -71,7 +71,7 @@
                 </properties>
                 <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                 <compartment entity-id="compartment#1">
-                    <lane hadOnlyOneElement="false" index="6" isChoiceOtherwiseLane="false" entity-id="d5e337dc-a53f-4412-be17-87e689ef14df">
+                    <lane hadOnlyOneElement="false" index="6" isChoiceOtherwiseLane="false" entity-id="35193403-42d3-4d4d-8ad0-74be7b5ce46e">
                         <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -119,11 +119,11 @@
                             </properties>
                         </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="11" isChoiceOtherwiseLane="false" entity-id="b2aa1ebe-f68f-46d6-ac10-8580b2784568">
+                    <lane hadOnlyOneElement="false" index="11" isChoiceOtherwiseLane="false" entity-id="7b95d810-8c8a-4555-9ea0-850307579e48">
                         <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="message" value="NOT IMPLEMENTED YET -- Routing resolve provider id request to CSD denormalization"/>
+<property name="message" value="Routing resolve provider id request to CSD denormalization"/>
 <property name="category"/>
 <property name="level" value="INFO"/>
 <property name="auxiliary;index" value="11"/>
@@ -167,7 +167,7 @@
                             </properties>
                         </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="false" entity-id="c49bbf6f-c949-4303-b2ce-35cc7b288156">
+                    <lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="false" entity-id="004e4f13-1e28-412a-b0ed-1f91d505afba">
                         <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#3">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
@@ -215,7 +215,7 @@
                             </properties>
                         </pattern>
                     </lane>
-                    <lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="true" entity-id="f5d4c1ad-faba-46d4-905e-09879173e80f">
+                    <lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="true" entity-id="41647cce-7750-46ec-ac0c-fa5a91f4e593">
                         <pattern name="Invalid Option" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#4">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>

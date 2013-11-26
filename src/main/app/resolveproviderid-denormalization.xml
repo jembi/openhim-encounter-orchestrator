@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
                 </message-properties-transformer>
             </when>
             <when expression="&quot;csd&quot;.equals(&quot;${pr.denormalization}&quot;)">
-                <logger message="NOT IMPLEMENTED YET -- Routing resolve provider id request to CSD denormalization" level="INFO" doc:name="Logger"/>
+                <logger message="Routing resolve provider id request to CSD denormalization" level="INFO" doc:name="Logger"/>
                 <vm:outbound-endpoint exchange-pattern="request-response" path="resolveproviderid-csd" doc:name="CSD"/>
                 <message-properties-transformer doc:name="Copy success status">
                     <add-message-property key="success" value="#[message.inboundProperties['success']]"/>
