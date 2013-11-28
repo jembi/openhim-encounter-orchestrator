@@ -39,6 +39,7 @@ public class CSDResolveProviderIDOffRampTransformer extends AbstractMessageTrans
 		"<otherID assigningAuthorityName=\"%s\" code=\"%s\"/>";
 	
 	public static final String SESSIONVAR_PROVIDER_TARGETIDTYPE = "provider-targetIdType";
+	public static final String UNIVERSAL_TARGETIDTYPE = "targetIdType-universal";
 	
 	protected static Map<String, String> ASSIGNING_AUTHORITY_OIDS = null;
 	private static final Object lock = new Object();
@@ -91,8 +92,7 @@ public class CSDResolveProviderIDOffRampTransformer extends AbstractMessageTrans
 	
 	private void setTargetIdTypeOIDSessionProperty(MuleMessage msg, String targetIdType) throws IdentifierTypeOIDNotSet {
 		if (targetIdType==null || targetIdType.equalsIgnoreCase(Constants.EPID_ID_TYPE)) {
-			//Use null to indicate that the universal identifier needs to be retrieved
-			msg.setProperty(SESSIONVAR_PROVIDER_TARGETIDTYPE, null, PropertyScope.SESSION);
+			msg.setProperty(SESSIONVAR_PROVIDER_TARGETIDTYPE, UNIVERSAL_TARGETIDTYPE, PropertyScope.SESSION);
 		} else {
 			String targetIdOID = ASSIGNING_AUTHORITY_OIDS.get(targetIdType);
 			if (targetIdOID==null)

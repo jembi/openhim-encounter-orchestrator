@@ -80,7 +80,8 @@ public class CSDResolveProviderIDResponseTransformer extends AbstractMessageTran
 		for (int i=0; i<nodes.getLength(); i++) {
 			Node node = nodes.item(i);
 
-			if (targetIdOID==null && node.hasAttributes()) {
+			if ((targetIdOID==null || CSDResolveProviderIDOffRampTransformer.UNIVERSAL_TARGETIDTYPE.equals(targetIdOID))
+					&& node.hasAttributes()) {
 				id = ((Element)node).getAttribute("oid");
 				break;
 			} else if (node.hasChildNodes()) {

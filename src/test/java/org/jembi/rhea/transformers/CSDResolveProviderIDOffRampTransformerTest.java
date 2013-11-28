@@ -63,8 +63,11 @@ public class CSDResolveProviderIDOffRampTransformerTest {
 		assertNotNull(res);
 		assertTrue(res instanceof String);
 		assertEquals(Util.trimXML(String.format(EXPECTED_REQUEST_BY_OTHERID, "1234", id)), Util.trimXML((String)res));
-		//EPID is universal and null is used to indicate this
-		verify(mockMessage).setProperty(CSDResolveProviderIDOffRampTransformer.SESSIONVAR_PROVIDER_TARGETIDTYPE, null, PropertyScope.SESSION);
+		verify(mockMessage).setProperty(
+			CSDResolveProviderIDOffRampTransformer.SESSIONVAR_PROVIDER_TARGETIDTYPE,
+			CSDResolveProviderIDOffRampTransformer.UNIVERSAL_TARGETIDTYPE,
+			PropertyScope.SESSION
+		);
 	}
 
 	@Test
@@ -80,8 +83,11 @@ public class CSDResolveProviderIDOffRampTransformerTest {
 		assertNotNull(res);
 		assertTrue(res instanceof String);
 		assertEquals(Util.trimXML(String.format(EXPECTED_REQUEST_BY_ID, id)), Util.trimXML((String)res));
-		//EPID is universal and null is used to indicate this
-		verify(mockMessage).setProperty(CSDResolveProviderIDOffRampTransformer.SESSIONVAR_PROVIDER_TARGETIDTYPE, "1234", PropertyScope.SESSION);
+		verify(mockMessage).setProperty(
+			CSDResolveProviderIDOffRampTransformer.SESSIONVAR_PROVIDER_TARGETIDTYPE,
+			"1234",
+			PropertyScope.SESSION
+		);
 	}
 
 	@Test
