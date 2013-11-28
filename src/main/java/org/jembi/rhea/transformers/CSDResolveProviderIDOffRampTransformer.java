@@ -17,7 +17,7 @@ import org.mule.transformer.AbstractMessageTransformer;
 public class CSDResolveProviderIDOffRampTransformer extends AbstractMessageTransformer {
 	
 	private static final String CSD_REQUEST_TEMPLATE =
-		"<?xml version=\"1\" encoding=\"utf-8\"?>\n" +
+		"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
 		"<csd:careServicesRequest xmlns:csd='urn:ihe:iti:csd:2013' xmlns='urn:ihe:iti:csd:2013'>\n" +
 		"    <function uuid=\"4e8bbeb9-f5f5-11e2-b778-0800200c9a66\">\n" +
 		"        <requestParams>\n" +

@@ -13,7 +13,7 @@
             <property name="ignore-resource-not-found"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="validatetfacility-denormalization-csdFlow" entity-id="ed0d884e-b23a-4f6d-aaa3-c5f807d6d1e3">
+    <flow SubFlow="false" name="validatetfacility-denormalization-csdFlow" entity-id="cb6becbe-bbf9-4ff0-87b7-de6e4354f3cc">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -74,21 +74,21 @@
                         <splitter index="8" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property-collection name="1b468f74-15c7-44c2-ac71-286f981bf792">
-    <property name="choice.otherwise" value="true"/>
-    <property-collection name="choice.attributes"/>
-</property-collection>
-<property-collection name="168a0bf2-7e2c-4829-aa0b-c1bfcbb5eaae">
+<property-collection name="a95b5709-d863-4140-a4af-5cb2afafe4c7">
     <property name="choice.expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
     <property-collection name="choice.attributes">
         <property name="expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
         <property name="evaluator" value="groovy"/>
     </property-collection>
 </property-collection>
+<property-collection name="7b29fd19-8f95-4caf-9ff2-e92691005f17">
+    <property name="choice.otherwise" value="true"/>
+    <property-collection name="choice.attributes"/>
+</property-collection>
                             </properties>
                             <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                             <compartment entity-id="compartment#2">
-<lane hadOnlyOneElement="false" index="10" isChoiceOtherwiseLane="false" entity-id="168a0bf2-7e2c-4829-aa0b-c1bfcbb5eaae">
+<lane hadOnlyOneElement="false" index="10" isChoiceOtherwiseLane="false" entity-id="a95b5709-d863-4140-a4af-5cb2afafe4c7">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#1">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -99,11 +99,11 @@
                 <splitter index="11" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#3">
                     <graphicalData x="0" y="0" width="0" height="0"/>
                     <properties>
-                        <property-collection name="b21f1a40-8f10-4f9c-bc8e-ce0e6c59f19e">
+                        <property-collection name="0a817fc2-8682-48fa-a806-0e76a18a1499">
                             <property name="choice.otherwise" value="true"/>
                             <property-collection name="choice.attributes"/>
                         </property-collection>
-                        <property-collection name="993e6990-1e1c-4c1b-9dc7-f40bc0f33829">
+                        <property-collection name="45be5686-730c-4be6-bdd3-101f77a1ff8a">
                             <property name="choice.expression" value="message.getPayloadAsString().contains('&lt;facility&gt;')"/>
                             <property-collection name="choice.attributes">
 <property name="expression" value="message.getPayloadAsString().contains('&lt;facility&gt;')"/>
@@ -113,7 +113,7 @@
                     </properties>
                     <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#4"/>
                     <compartment entity-id="compartment#4">
-                        <lane hadOnlyOneElement="false" index="13" isChoiceOtherwiseLane="false" entity-id="993e6990-1e1c-4c1b-9dc7-f40bc0f33829">
+                        <lane hadOnlyOneElement="false" index="13" isChoiceOtherwiseLane="false" entity-id="45be5686-730c-4be6-bdd3-101f77a1ff8a">
                             <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#2">
 <graphicalData x="0" y="0" width="0" height="0"/>
 <properties>
@@ -143,7 +143,7 @@
 </compartment>
                             </scope>
                         </lane>
-                        <lane hadOnlyOneElement="false" index="17" isChoiceOtherwiseLane="true" entity-id="b21f1a40-8f10-4f9c-bc8e-ce0e6c59f19e">
+                        <lane hadOnlyOneElement="false" index="17" isChoiceOtherwiseLane="true" entity-id="0a817fc2-8682-48fa-a806-0e76a18a1499">
                             <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#3">
 <graphicalData x="0" y="0" width="0" height="0"/>
 <properties>
@@ -179,7 +179,7 @@
         </compartment>
     </scope>
 </lane>
-<lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="true" entity-id="1b468f74-15c7-44c2-ac71-286f981bf792">
+<lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="true" entity-id="7b29fd19-8f95-4caf-9ff2-e92691005f17">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#4">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -232,7 +232,7 @@
                     <property name="followRedirects"/>
                     <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
                     <property name="keep-alive"/>
-                    <property name="contentType"/>
+                    <property name="contentType" value="text/xml"/>
                     <property name="disableTransportTransformer"/>
                     <property name="password"/>
                     <property name="exchange-pattern" value="request-response"/>
@@ -242,9 +242,9 @@
                     <property name="httpLabel"/>
                     <property name="address"/>
                     <property name="path" value="CSD/careServicesRequest"/>
-                    <property name="encoding"/>
+                    <property name="encoding" value="UTF-8"/>
                     <property name="responseTransformer-refs"/>
-                    <property name="method" value="GET"/>
+                    <property name="method" value="POST"/>
                     <property name="user"/>
                     <property name="auxiliary;index" value="25"/>
                     <property name="responseTimeout"/>

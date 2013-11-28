@@ -1,10 +1,6 @@
 package org.jembi.rhea.flows;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -49,7 +45,7 @@ public class mediationValidateFacilityDenormalizationCSDTest extends
 	public WireMockRule wireMockRule = new WireMockRule(8080);
 
 	private void setupWebserviceStub(int httpStatus, String responseBody) {
-		stubFor(get(urlEqualTo("/CSD/careServicesRequest"))
+		stubFor(post(urlEqualTo("/CSD/careServicesRequest"))
 				.withHeader("Accept", equalTo("application/xml"))
 		    	.willReturn(aResponse()
 		    		.withStatus(httpStatus)
