@@ -17,6 +17,7 @@ public class CSDValidateFacilityOffRampTransformer extends AbstractMessageTransf
 		"            <id oid=\"%s\"/>\n" +
 		"            <primaryName/>\n" +
 		"            <name/>\n" +
+		"            <codedType/>\n" +
 		"            <addressLine/>\n" +
 		"            <record/>\n" +
 		"            <start/>\n" +

@@ -19,6 +19,7 @@ public class CSDValidateFacilityOffRampTransformerTest {
 		"            <id oid=\"%s\"/>\n" +
 		"            <primaryName/>\n" +
 		"            <name/>\n" +
+		"            <codedType/>\n" +
 		"            <addressLine/>\n" +
 		"            <record/>\n" +
 		"            <start/>\n" +
