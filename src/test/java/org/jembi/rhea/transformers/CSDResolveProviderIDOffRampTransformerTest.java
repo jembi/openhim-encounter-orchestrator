@@ -114,6 +114,7 @@ public class CSDResolveProviderIDOffRampTransformerTest {
 		transformer.setAssigningAuthorityOIDS("This is invalid");
 		try {
 			transformer.transform(mockMessage, "");
+			fail();
 		} catch (TransformerException ex) {
 			//expected
 		}
