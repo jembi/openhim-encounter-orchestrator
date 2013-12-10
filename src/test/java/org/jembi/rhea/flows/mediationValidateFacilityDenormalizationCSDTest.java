@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.jembi.rhea.transformers.CSDValidateFacilityOffRampTransformer;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mule.api.MuleMessage;
@@ -83,6 +84,9 @@ public class mediationValidateFacilityDenormalizationCSDTest extends
 	    String success = result.getProperty("success", PropertyScope.INBOUND);
 	    assertEquals("true", success);
 
+	    verify(postRequestedFor(urlMatching("/CSD/careServicesRequest"))
+	    	.withRequestBody(matching(".*<id oid=\"1234\"/>.*"))
+	    );
 	    log.info("Test completed");
 	}
 	
@@ -99,6 +103,9 @@ public class mediationValidateFacilityDenormalizationCSDTest extends
 	    String success = result.getProperty("success", PropertyScope.INBOUND);
 	    assertEquals("false", success);
 
+	    verify(postRequestedFor(urlMatching("/CSD/careServicesRequest"))
+	    	.withRequestBody(matching(".*<id oid=\"1234\"/>.*"))
+	    );
 	    log.info("Test completed");
 	}
 	
