@@ -41,8 +41,7 @@ public class CSDResolveProviderIDOffRampTransformer extends AbstractMessageTrans
 	public static final String SESSIONVAR_PROVIDER_TARGETIDTYPE = "provider-targetIdType";
 	public static final String UNIVERSAL_TARGETIDTYPE = "targetIdType-universal";
 	
-	protected static Map<String, String> ASSIGNING_AUTHORITY_OIDS = null;
-	private static final Object lock = new Object();
+	private Map<String, String> ASSIGNING_AUTHORITY_OIDS = null;
 
 	private String assigningAuthorityOIDS;
 	
@@ -53,10 +52,8 @@ public class CSDResolveProviderIDOffRampTransformer extends AbstractMessageTrans
 			throws TransformerException {
 
 		try {
-			synchronized (lock) {
-				if (ASSIGNING_AUTHORITY_OIDS==null)
-					buildProviderIdTypeOIDSMap();
-			}
+			if (ASSIGNING_AUTHORITY_OIDS==null)
+				buildProviderIdTypeOIDSMap();
 			
 			Map<String, String> payload = (Map<String, String>) msg.getPayload();
 			String id = payload.get("id");

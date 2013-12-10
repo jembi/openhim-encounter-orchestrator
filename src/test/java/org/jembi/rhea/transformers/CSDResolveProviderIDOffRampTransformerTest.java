@@ -55,7 +55,6 @@ public class CSDResolveProviderIDOffRampTransformerTest {
 		String id = "1234567890";
 		MuleMessage mockMessage = buildMockMessage(id, "NID", "EPID");
 		CSDResolveProviderIDOffRampTransformer transformer = new CSDResolveProviderIDOffRampTransformer();
-		CSDResolveProviderIDOffRampTransformer.ASSIGNING_AUTHORITY_OIDS = null;
 
 		transformer.setAssigningAuthorityOIDS("NID:1234");
 		Object res = transformer.transform(mockMessage, "");
@@ -75,7 +74,6 @@ public class CSDResolveProviderIDOffRampTransformerTest {
 		String id = "1234567890";
 		MuleMessage mockMessage = buildMockMessage(id, "EPID", "NID");
 		CSDResolveProviderIDOffRampTransformer transformer = new CSDResolveProviderIDOffRampTransformer();
-		CSDResolveProviderIDOffRampTransformer.ASSIGNING_AUTHORITY_OIDS = null;
 
 		transformer.setAssigningAuthorityOIDS("NID:1234");
 		Object res = transformer.transform(mockMessage, "");
@@ -95,7 +93,6 @@ public class CSDResolveProviderIDOffRampTransformerTest {
 		String id = "1234567890";
 		MuleMessage mockMessage = buildMockMessage(id, "OTHER-ID", "THIRD-ID");
 		CSDResolveProviderIDOffRampTransformer transformer = new CSDResolveProviderIDOffRampTransformer();
-		CSDResolveProviderIDOffRampTransformer.ASSIGNING_AUTHORITY_OIDS = null;
 
 		transformer.setAssigningAuthorityOIDS("NID:1234,OTHER-ID:2345,THIRD-ID:3456");
 		Object res = transformer.transform(mockMessage, "");
@@ -109,7 +106,6 @@ public class CSDResolveProviderIDOffRampTransformerTest {
 	public void testIdTypeOIDSProperties_invalid() throws TransformerException {
 		MuleMessage mockMessage = buildMockMessage("1234567890", "NID", "EPID");
 		CSDResolveProviderIDOffRampTransformer transformer = new CSDResolveProviderIDOffRampTransformer();
-		CSDResolveProviderIDOffRampTransformer.ASSIGNING_AUTHORITY_OIDS = null;
 
 		transformer.setAssigningAuthorityOIDS("This is invalid");
 		try {
