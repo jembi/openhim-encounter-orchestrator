@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="mediation-getecid-denormalization-mockserviceprovider">
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="validatefacility-denormalization-csd">
     <global-element name="Property Placeholder" type="http://www.springframework.org/schema/context/property-placeholder" entity-id="Property Placeholder#1">
         <properties>
             <property name="properties-ref"/>
@@ -13,10 +13,11 @@
             <property name="ignore-resource-not-found"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="validatetfacility-denormalization-resourcemapFlow1" entity-id="368bbc58-589f-4ad6-b060-49ab83fbc1fe">
+    <flow SubFlow="false" name="validatetfacility-denormalization-csdFlow" entity-id="133dcecb-e465-4da8-b31b-8016eb422f49">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
+            <property name="initialState"/>
             <property name="bussinessEventsLabel"/>
             <property name="auxiliary;index" value="2"/>
             <property name="tracking:enable-default-events"/>
@@ -33,7 +34,7 @@
                     <property name="ref"/>
                     <property name="transformer-refs"/>
                     <property name="address"/>
-                    <property name="path" value="validateFacility-resourcemap"/>
+                    <property name="path" value="validateFacility-csd"/>
                     <property name="encoding"/>
                     <property name="responseTransformer-refs"/>
                     <property name="auxiliary;index" value="3"/>
@@ -45,7 +46,7 @@
             <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property name="message" value="In validateFacility de-normalization for resource map"/>
+                    <property name="message" value="In validateFacility de-normalization for CSD"/>
                     <property name="category"/>
                     <property name="level" value="INFO"/>
                     <property name="auxiliary;index" value="4"/>
@@ -64,90 +65,129 @@
                         <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="message" value="Responce recieved from resource map: #[groovy: message.toString();]"/>
+<property name="message" value="Response recieved from CSD InfoManager: #[groovy: message.toString();]"/>
 <property name="category"/>
 <property name="level" value="INFO"/>
 <property name="auxiliary;index" value="7"/>
                             </properties>
                         </pattern>
-                        <pattern name="XSLT" type="http://www.mulesoft.org/schema/mule/xml/xslt-transformer" entity-id="XSLT#1">
+                        <splitter index="8" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="returnClass"/>
-<property name="xsl-file" value="xslt/ResMap-rss-to-rhea-custom.xsl"/>
-<property name="ignoreBadInput"/>
-<property name="maxActiveTransformers" value="5"/>
-<property name="encoding"/>
-<property name="transformerFactoryClass"/>
-<property name="outputEncoding"/>
-<property name="auxiliary;index" value="8"/>
-<property name="mimeType"/>
-<property name="maxIdleTransformers" value="2"/>
-<property name="uriResolver-ref"/>
-                            </properties>
-                        </pattern>
-                        <pattern name="Echo" type="org.mule.tooling.ui.modules.core.pattern.echo" entity-id="Echo#2">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="auxiliary;index" value="9"/>
-                            </properties>
-                        </pattern>
-                        <splitter index="10" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property-collection name="a9091f3a-7eea-47bf-a893-316e4462e75c">
+<property-collection name="c896d812-080a-4b6c-a6f5-22fa18b7dca2">
     <property name="choice.otherwise" value="true"/>
     <property-collection name="choice.attributes"/>
 </property-collection>
-<property-collection name="d4205661-87b7-4916-a543-60b748e02fc8">
-    <property name="choice.expression" value="message.getPayloadAsString().contains('&lt;facilityReport&gt;')"/>
+<property-collection name="67516fb1-4c6e-4140-a327-d193fe31d30c">
+    <property name="choice.expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
     <property-collection name="choice.attributes">
-        <property name="expression" value="message.getPayloadAsString().contains('&lt;facilityReport&gt;')"/>
+        <property name="expression" value="message.getInboundProperty('http.status').equals('200') &amp;&amp; (message.getPayloadAsString().length() &gt; 0)"/>
         <property name="evaluator" value="groovy"/>
     </property-collection>
 </property-collection>
                             </properties>
                             <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                             <compartment entity-id="compartment#2">
-<lane hadOnlyOneElement="false" index="12" isChoiceOtherwiseLane="false" entity-id="d4205661-87b7-4916-a543-60b748e02fc8">
+<lane hadOnlyOneElement="false" index="10" isChoiceOtherwiseLane="false" entity-id="67516fb1-4c6e-4140-a327-d193fe31d30c">
     <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#1">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
-            <property name="auxiliary;index" value="12"/>
+            <property name="auxiliary;index" value="10"/>
         </properties>
         <compartment entity-id="compartment#3">
             <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#3">
-                <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#1">
+                <splitter index="11" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#3">
                     <graphicalData x="0" y="0" width="0" height="0"/>
                     <properties>
-                        <property name="returnClass"/>
-                        <property name="ignoreBadInput"/>
-                        <property name="scope"/>
-                        <property name="overwrite"/>
-                        <property name="encoding"/>
-                        <property name="auxiliary;index" value="13"/>
-                        <property name="mimeType"/>
-                        <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
-                            <property name="value" value="true"/>
-                            <property name="key" value="success"/>
-                            <property name="auxiliary;index" value="14"/>
-                            <property name="auxiliary;wrapIn" value="14"/>
+                        <property-collection name="b0066ac1-0bfd-4c6f-b4ab-91f359e67400">
+                            <property name="choice.expression" value="message.getPayloadAsString().contains('&lt;facility&gt;')"/>
+                            <property-collection name="choice.attributes">
+<property name="expression" value="message.getPayloadAsString().contains('&lt;facility&gt;')"/>
+<property name="evaluator" value="groovy"/>
+                            </property-collection>
+                        </property-collection>
+                        <property-collection name="ad4d824e-6155-45fa-9e3f-916ce3e6ba53">
+                            <property name="choice.otherwise" value="true"/>
+                            <property-collection name="choice.attributes"/>
                         </property-collection>
                     </properties>
-                </pattern>
+                    <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#4"/>
+                    <compartment entity-id="compartment#4">
+                        <lane hadOnlyOneElement="false" index="13" isChoiceOtherwiseLane="false" entity-id="b0066ac1-0bfd-4c6f-b4ab-91f359e67400">
+                            <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#2">
+<graphicalData x="0" y="0" width="0" height="0"/>
+<properties>
+    <property name="auxiliary;index" value="13"/>
+</properties>
+<compartment entity-id="compartment#5">
+    <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#4">
+        <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#1">
+            <graphicalData x="0" y="0" width="0" height="0"/>
+            <properties>
+                <property name="returnClass"/>
+                <property name="ignoreBadInput"/>
+                <property name="scope"/>
+                <property name="overwrite"/>
+                <property name="encoding"/>
+                <property name="auxiliary;index" value="14"/>
+                <property name="mimeType"/>
+                <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
+                    <property name="value" value="true"/>
+                    <property name="key" value="success"/>
+                    <property name="auxiliary;index" value="15"/>
+                    <property name="auxiliary;wrapIn" value="15"/>
+                </property-collection>
+            </properties>
+        </pattern>
+    </lane>
+</compartment>
+                            </scope>
+                        </lane>
+                        <lane hadOnlyOneElement="false" index="17" isChoiceOtherwiseLane="true" entity-id="ad4d824e-6155-45fa-9e3f-916ce3e6ba53">
+                            <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#3">
+<graphicalData x="0" y="0" width="0" height="0"/>
+<properties>
+    <property name="auxiliary;index" value="17"/>
+</properties>
+<compartment entity-id="compartment#6">
+    <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#5">
+        <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#2">
+            <graphicalData x="0" y="0" width="0" height="0"/>
+            <properties>
+                <property name="returnClass"/>
+                <property name="ignoreBadInput"/>
+                <property name="scope"/>
+                <property name="overwrite"/>
+                <property name="encoding"/>
+                <property name="auxiliary;index" value="18"/>
+                <property name="mimeType"/>
+                <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
+                    <property name="value" value="false"/>
+                    <property name="key" value="success"/>
+                    <property name="auxiliary;index" value="19"/>
+                    <property name="auxiliary;wrapIn" value="19"/>
+                </property-collection>
+            </properties>
+        </pattern>
+    </lane>
+</compartment>
+                            </scope>
+                        </lane>
+                    </compartment>
+                </splitter>
             </lane>
         </compartment>
     </scope>
 </lane>
-<lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="true" entity-id="a9091f3a-7eea-47bf-a893-316e4462e75c">
-    <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#2">
+<lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="true" entity-id="c896d812-080a-4b6c-a6f5-22fa18b7dca2">
+    <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#4">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
-            <property name="auxiliary;index" value="16"/>
+            <property name="auxiliary;index" value="21"/>
         </properties>
-        <compartment entity-id="compartment#4">
-            <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#4">
-                <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#2">
+        <compartment entity-id="compartment#7">
+            <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#6">
+                <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#3">
                     <graphicalData x="0" y="0" width="0" height="0"/>
                     <properties>
                         <property name="returnClass"/>
@@ -155,13 +195,13 @@
                         <property name="scope"/>
                         <property name="overwrite"/>
                         <property name="encoding"/>
-                        <property name="auxiliary;index" value="17"/>
+                        <property name="auxiliary;index" value="22"/>
                         <property name="mimeType"/>
                         <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                             <property name="value" value="false"/>
                             <property name="key" value="success"/>
-                            <property name="auxiliary;index" value="18"/>
-                            <property name="auxiliary;wrapIn" value="18"/>
+                            <property name="auxiliary;index" value="23"/>
+                            <property name="auxiliary;wrapIn" value="23"/>
                         </property-collection>
                     </properties>
                 </pattern>
@@ -174,37 +214,24 @@
                         <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#3">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="message" value="Exitting validateFacility de-normalization for resource map"/>
+<property name="message" value="Exiting validateFacility de-normalization for CSD"/>
 <property name="category"/>
 <property name="level" value="INFO"/>
-<property name="auxiliary;index" value="19"/>
-                            </properties>
-                        </pattern>
-                        <pattern name="Echo" type="org.mule.tooling.ui.modules.core.pattern.echo" entity-id="Echo#3">
-                            <graphicalData x="0" y="0" width="0" height="0"/>
-                            <properties>
-<property name="auxiliary;index" value="20"/>
+<property name="auxiliary;index" value="24"/>
                             </properties>
                         </pattern>
                     </lane>
                 </compartment>
             </response>
-            <pattern name="Message Properties" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#3">
+            <pattern name="Offramp Transformer" type="org.mule.tooling.ui.modules.core.pattern.customTransformer" entity-id="Java#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="returnClass"/>
                     <property name="ignoreBadInput"/>
-                    <property name="scope"/>
-                    <property name="overwrite"/>
                     <property name="encoding"/>
-                    <property name="auxiliary;index" value="21"/>
+                    <property name="class" value="org.jembi.rhea.transformers.CSDValidateFacilityOffRampTransformer"/>
+                    <property name="auxiliary;index" value="25"/>
                     <property name="mimeType"/>
-                    <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
-                        <property name="value" value="${fr.auth}"/>
-                        <property name="key" value="Authorization"/>
-                        <property name="auxiliary;index" value="22"/>
-                        <property name="auxiliary;wrapIn" value="22"/>
-                    </property-collection>
                 </properties>
             </pattern>
             <endpoint direction="Outbound" message-exchange-pattern="RequestResponse" name="HTTP" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#1">
@@ -216,7 +243,7 @@
                     <property name="followRedirects"/>
                     <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
                     <property name="keep-alive"/>
-                    <property name="contentType"/>
+                    <property name="contentType" value="text/xml"/>
                     <property name="disableTransportTransformer"/>
                     <property name="password"/>
                     <property name="exchange-pattern" value="request-response"/>
@@ -225,14 +252,14 @@
                     <property name="transformer-refs"/>
                     <property name="httpLabel"/>
                     <property name="address"/>
-                    <property name="path" value="api/collections/${fr.resmap.collection.id}.rss?fosaid=#[groovy: return message.payload]"/>
-                    <property name="encoding"/>
+                    <property name="path" value="${fr.csd.path}"/>
+                    <property name="encoding" value="UTF-8"/>
                     <property name="responseTransformer-refs"/>
-                    <property name="method" value="GET"/>
+                    <property name="method" value="POST"/>
                     <property name="user"/>
-                    <property name="auxiliary;index" value="23"/>
+                    <property name="auxiliary;index" value="26"/>
                     <property name="responseTimeout"/>
-                    <property name="mimeType"/>
+                    <property name="mimeType" value="text/xml"/>
                     <property name="connector-ref"/>
                 </properties>
             </endpoint>
@@ -241,17 +268,17 @@
                     <property name="labelConfigureConditionalExecutionUsingExpression"/>
                     <property name="when"/>
                     <property name="enableNotifications"/>
-                    <property name="auxiliary;index" value="24"/>
+                    <property name="auxiliary;index" value="27"/>
                 </properties>
-                <compartment entity-id="compartment#5">
-                    <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#5">
-                        <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#3">
+                <compartment entity-id="compartment#8">
+                    <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#7">
+                        <scope name="Processor Chain" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#5">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="auxiliary;index" value="25"/>
+<property name="auxiliary;index" value="28"/>
                             </properties>
-                            <compartment entity-id="compartment#6">
-<lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#6">
+                            <compartment entity-id="compartment#9">
+<lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#8">
     <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#4">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -260,13 +287,13 @@
             <property name="scope"/>
             <property name="overwrite"/>
             <property name="encoding"/>
-            <property name="auxiliary;index" value="26"/>
+            <property name="auxiliary;index" value="29"/>
             <property name="mimeType"/>
             <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                 <property name="value" value="false"/>
                 <property name="key" value="success"/>
-                <property name="auxiliary;index" value="27"/>
-                <property name="auxiliary;wrapIn" value="27"/>
+                <property name="auxiliary;index" value="30"/>
+                <property name="auxiliary;wrapIn" value="30"/>
             </property-collection>
         </properties>
     </pattern>
@@ -277,7 +304,6 @@
                 </compartment>
             </scope>
         </lane>
-        <apikit>false</apikit>
     </flow>
     <description></description>
 </mule-configuration>

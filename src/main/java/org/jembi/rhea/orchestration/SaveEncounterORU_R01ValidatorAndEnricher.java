@@ -176,8 +176,9 @@ public class SaveEncounterORU_R01ValidatorAndEnricher implements Callable {
 		Map<String, String> ProIdMap = new HashMap<String, String>();
 		ProIdMap.put("id", proID);
 		ProIdMap.put("idType", proIDType);
+		ProIdMap.put("targetIdType", Constants.EPID_ID_TYPE);
 		
-		MuleMessage response = client.send("vm://getepid-openldap", ProIdMap, null, 5000);
+		MuleMessage response = client.send("vm://resolveproviderid", ProIdMap, null, 5000);
 		
 		String success = response.getInboundProperty("success");
 		if (success.equals("true")) {
@@ -211,7 +212,7 @@ public class SaveEncounterORU_R01ValidatorAndEnricher implements Callable {
 		// Validate location ID is correct - sending facility
 		String elid = oru_r01.getMSH().getSendingFacility().getHd1_NamespaceID().getValue();
 		
-		MuleMessage response = client.send("vm://validateFacility-resourcemap", elid, null, 5000);
+		MuleMessage response = client.send("vm://validateFacility", elid, null, 5000);
 		
 		String success = response.getInboundProperty("success");
 		if (!success.equals("true")) {

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+    <context:property-placeholder location="classpath:encounter-mediator.properties, classpath:encounter-mediator-override.properties"/>
+    <flow name="resolveproviderid-denormalizationFlow1" doc:name="resolveproviderid-denormalizationFlow1">
+        <vm:inbound-endpoint exchange-pattern="request-response" path="resolveproviderid" doc:name="VM"/>
+        <choice doc:name="Choice">
+            <when expression="&quot;openldap&quot;.equals(&quot;${pr.denormalization}&quot;)">
+                <logger message="Routing resolve provider id request to OpenLDAP denormalization" level="INFO" doc:name="Logger"/>
+                <vm:outbound-endpoint exchange-pattern="request-response" path="resolveproviderid-openldap" doc:name="OpenLDAP"/>
+                <message-properties-transformer doc:name="Copy success status">
+                    <add-message-property key="success" value="#[message.inboundProperties['success']]"/>
+                </message-properties-transformer>
+            </when>
+            <when expression="&quot;csd&quot;.equals(&quot;${pr.denormalization}&quot;)">
+                <logger message="Routing resolve provider id request to CSD denormalization" level="INFO" doc:name="Logger"/>
+                <vm:outbound-endpoint exchange-pattern="request-response" path="resolveproviderid-csd" doc:name="CSD"/>
+                <message-properties-transformer doc:name="Copy success status">
+                    <add-message-property key="success" value="#[message.inboundProperties['success']]"/>
+                </message-properties-transformer>
+            </when>
+            <when expression="&quot;mock&quot;.equals(&quot;${pr.denormalization}&quot;)">
+                <logger message="Routing resolve provider id request to Mock denormalization" level="INFO" doc:name="Logger"/>
+                <vm:outbound-endpoint exchange-pattern="request-response" path="resolveproviderid-mock" doc:name="Mock"/>
+                <message-properties-transformer doc:name="Copy success status">
+                    <add-message-property key="success" value="#[message.inboundProperties['success']]"/>
+                </message-properties-transformer>
+            </when>
+            <otherwise>
+                <logger message="An invalid option was set for the setting pr.denormalization" level="ERROR" doc:name="Invalid Option"/>
+                <message-properties-transformer doc:name="Set success status">
+                    <add-message-property key="success" value="false"/>
+                </message-properties-transformer>
+            </otherwise>
+        </choice>
+    </flow>
+</mule>

@@ -56,8 +56,8 @@ public class SaveEncounterORU_R01ValidatorAndEnricherTest {
 		MuleMessage mockGetPatientResponse = Util.buildMockMuleResponse(responseSuccessful, mockGetPatient);
 		
 		when(mockClient.send(eq("vm://getecid"), anyMap(), anyMap(), anyInt())).thenReturn(mockECIDResponse);
-		when(mockClient.send(eq("vm://getepid-openldap"), anyMap(), anyMap(), anyInt())).thenReturn(mockEPIDResponse);
-		when(mockClient.send(eq("vm://validateFacility-resourcemap"), anyMap(), anyMap(), anyInt())).thenReturn(mockResponse);
+		when(mockClient.send(eq("vm://resolveproviderid"), anyMap(), anyMap(), anyInt())).thenReturn(mockEPIDResponse);
+		when(mockClient.send(eq("vm://validateFacility"), anyMap(), anyMap(), anyInt())).thenReturn(mockResponse);
 		when(mockClient.send(eq("vm://getPatient-De-normailization-OpenEMPI"), anyMap(), anyMap(), anyInt())).thenReturn(mockGetPatientResponse);
 		
 		return mockClient;

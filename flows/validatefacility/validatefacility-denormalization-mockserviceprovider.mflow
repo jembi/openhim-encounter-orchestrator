@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="mediation-getecid-denormalization-mockserviceprovider">
-    <flow SubFlow="false" name="validatetfacility-denormalization-mockserviceproviderFlow1" entity-id="9a5be834-d333-467b-aaf7-1d0c83c85eaa">
+    <flow SubFlow="false" name="validatetfacility-denormalization-mockserviceproviderFlow1" entity-id="d36208d8-af19-4cf2-a4d0-99798101484a">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
+            <property name="initialState"/>
             <property name="bussinessEventsLabel"/>
-            <property name="tracking:enable-default-events"/>
             <property name="auxiliary;index" value="1"/>
+            <property name="tracking:enable-default-events"/>
         </properties>
         <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
             <graphicalData x="0" y="0" width="0" height="0"/>
             <endpoint direction="Inbound" message-exchange-pattern="OneWay" name="VM" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
+                    <property name="businessEventsLabel"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="tracking:enable-default-events"/>
                     <property name="ref"/>
                     <property name="transformer-refs"/>
                     <property name="address"/>
-                    <property name="businessEventsLabel"/>
+                    <property name="path" value="validateFacility-mock"/>
                     <property name="encoding"/>
-                    <property name="path" value="validateFacility"/>
                     <property name="responseTransformer-refs"/>
-                    <property name="disableTransportTransformer"/>
-                    <property name="mimeType" value="text/plain"/>
-                    <property name="responseTimeout" value="10000"/>
-                    <property name="tracking:enable-default-events"/>
                     <property name="auxiliary;index" value="2"/>
-                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="responseTimeout" value="10000"/>
+                    <property name="mimeType" value="text/plain"/>
                     <property name="connector-ref"/>
                 </properties>
             </endpoint>
             <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property name="message" value="In validateFacility de-normalization"/>
+                    <property name="message" value="In validateFacility Mock de-normalization"/>
                     <property name="category"/>
                     <property name="level" value="INFO"/>
                     <property name="auxiliary;index" value="3"/>
@@ -51,20 +52,20 @@
                         <splitter index="6" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property-collection name="c0078c1c-3695-4048-a74d-211ef2dbbd2e">
-    <property name="choice.otherwise" value="true"/>
-    <property-collection name="choice.attributes"/>
-</property-collection>
-<property-collection name="ed6ce0c8-532e-43bb-ab7f-731d9893334b">
+<property-collection name="c6c2784a-2604-4394-9c26-d22cdf2dfb4e">
     <property name="choice.expression" value="message.getInboundProperty('http.status').equals('200')"/>
     <property-collection name="choice.attributes">
         <property name="expression" value="message.getInboundProperty('http.status').equals('200')"/>
     </property-collection>
 </property-collection>
+<property-collection name="fb6845b3-5e7b-4d5c-953a-0c8ef8a78f13">
+    <property name="choice.otherwise" value="true"/>
+    <property-collection name="choice.attributes"/>
+</property-collection>
                             </properties>
                             <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
                             <compartment entity-id="compartment#2">
-<lane hadOnlyOneElement="false" index="8" isChoiceOtherwiseLane="false" entity-id="ed6ce0c8-532e-43bb-ab7f-731d9893334b">
+<lane hadOnlyOneElement="false" index="8" isChoiceOtherwiseLane="false" entity-id="c6c2784a-2604-4394-9c26-d22cdf2dfb4e">
     <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#1">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -73,8 +74,8 @@
             <property name="scope"/>
             <property name="overwrite"/>
             <property name="encoding"/>
-            <property name="mimeType"/>
             <property name="auxiliary;index" value="8"/>
+            <property name="mimeType"/>
             <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                 <property name="value" value="true"/>
                 <property name="key" value="success"/>
@@ -84,7 +85,7 @@
         </properties>
     </pattern>
 </lane>
-<lane hadOnlyOneElement="false" index="11" isChoiceOtherwiseLane="true" entity-id="c0078c1c-3695-4048-a74d-211ef2dbbd2e">
+<lane hadOnlyOneElement="false" index="11" isChoiceOtherwiseLane="true" entity-id="fb6845b3-5e7b-4d5c-953a-0c8ef8a78f13">
     <pattern name="Set transaction success" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#2">
         <graphicalData x="0" y="0" width="0" height="0"/>
         <properties>
@@ -93,8 +94,8 @@
             <property name="scope"/>
             <property name="overwrite"/>
             <property name="encoding"/>
-            <property name="mimeType"/>
             <property name="auxiliary;index" value="11"/>
+            <property name="mimeType"/>
             <property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
                 <property name="value" value="false"/>
                 <property name="key" value="success"/>
@@ -109,7 +110,7 @@
                         <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#2">
                             <graphicalData x="0" y="0" width="0" height="0"/>
                             <properties>
-<property name="message" value="Exitting validteFacility de-normalization"/>
+<property name="message" value="Exiting validateFacility Mock de-normalization"/>
 <property name="category"/>
 <property name="level" value="INFO"/>
 <property name="auxiliary;index" value="13"/>
@@ -147,9 +148,9 @@
                     <property name="responseTransformer-refs"/>
                     <property name="method" value="GET"/>
                     <property name="user"/>
+                    <property name="auxiliary;index" value="15"/>
                     <property name="responseTimeout"/>
                     <property name="mimeType"/>
-                    <property name="auxiliary;index" value="15"/>
                     <property name="connector-ref"/>
                 </properties>
             </endpoint>

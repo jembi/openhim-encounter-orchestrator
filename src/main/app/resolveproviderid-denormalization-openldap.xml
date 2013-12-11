@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" version="CE-3.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" version="EE-3.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
     <context:property-placeholder location="classpath:encounter-mediator.properties, classpath:encounter-mediator-override.properties"/>
-    <flow name="mediation-getepid-denormalization-openldapFlow1" doc:name="mediation-getepid-denormalization-openldapFlow1">
-        <vm:inbound-endpoint exchange-pattern="request-response" path="getepid-openldap" responseTimeout="10000" mimeType="text/plain" doc:name="VM"/>
-        <logger message="In getepid de-normalization for OpenLDAP #[groovy: message.toString()]" level="INFO" doc:name="Logger"/>
+    <flow name="mediation-resolveproviderid-denormalization-openldapFlow1" doc:name="mediation-resolveproviderid-denormalization-openldapFlow1">
+        <vm:inbound-endpoint exchange-pattern="request-response" path="resolveproviderid-openldap" responseTimeout="10000" mimeType="text/plain" doc:name="VM"/>
+        <logger message="In Resolve Provider ID de-normalization for OpenLDAP #[groovy: message.toString()]" level="INFO" doc:name="Logger"/>
         <logger message="Length: #[groovy: message.getPayloadAsString().length()]" level="INFO" doc:name="Logger"/>
         <message-properties-transformer doc:name="Add basic auth">
-            <add-message-property key="Authorization" value="${pr.auth}"/>
+            <add-message-property key="Authorization" value="${pr.openldap.auth}"/>
         </message-properties-transformer>
         <response>
             <choice doc:name="Choice">
@@ -30,8 +29,8 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
                     </processor-chain>
                 </otherwise>
             </choice>
-            <logger message="Exitting getepid de-normalization for OpenLDAP #[groovy: message.toString()]" level="INFO" doc:name="Logger"/>
+            <logger message="Exiting Resolve Provider ID de-normalization for OpenLDAP #[groovy: message.toString()]" level="INFO" doc:name="Logger"/>
         </response>
-        <http:outbound-endpoint exchange-pattern="request-response" host="${pr.host}" port="${pr.port}" path="webservices/lookupbyid/epid/?id_type=#[groovy: return message.payload.get('idType')]&amp;id_number=#[groovy: return message.payload.get('id')]" method="GET" doc:name="HTTP"/>
+        <http:outbound-endpoint exchange-pattern="request-response" host="${pr.host}" port="${pr.port}" path="webservices/lookupbyid/#[groovy: return ((String)message.payload.get('targetIdType')).toLowerCase()]/?id_type=#[groovy: return message.payload.get('idType')]&amp;id_number=#[groovy: return message.payload.get('id')]" method="GET" doc:name="HTTP"/>
     </flow>
 </mule>

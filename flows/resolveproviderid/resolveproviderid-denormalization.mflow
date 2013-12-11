@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="resolveproviderid-denormalization">
+    <global-element name="Property Placeholder" type="http://www.springframework.org/schema/context/property-placeholder" entity-id="Property Placeholder#1">
+        <properties>
+            <property name="properties-ref"/>
+            <property name="order"/>
+            <property name="location" value="classpath:encounter-mediator.properties, classpath:encounter-mediator-override.properties"/>
+            <property name="local-override"/>
+            <property name="system-properties-mode"/>
+            <property name="file-encoding"/>
+            <property name="auxiliary;index" value="1"/>
+            <property name="ignore-unresolvable"/>
+            <property name="ignore-resource-not-found"/>
+        </properties>
+    </global-element>
+    <flow SubFlow="false" name="resolveproviderid-denormalizationFlow1" entity-id="68e54399-4900-4dd3-91aa-3938abc4ec0e">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="initialState"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="auxiliary;index" value="2"/>
+            <property name="tracking:enable-default-events"/>
+        </properties>
+        <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
+            <graphicalData x="0" y="0" width="0" height="0"/>
+            <endpoint direction="Inbound" message-exchange-pattern="OneWay" name="VM" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#1">
+                <graphicalData x="0" y="0" width="0" height="0"/>
+                <properties>
+                    <property name="businessEventsLabel"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="address"/>
+                    <property name="path" value="resolveproviderid"/>
+                    <property name="encoding"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="auxiliary;index" value="3"/>
+                    <property name="responseTimeout"/>
+                    <property name="mimeType"/>
+                    <property name="connector-ref"/>
+                </properties>
+            </endpoint>
+            <splitter index="4" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
+                <graphicalData x="0" y="0" width="0" height="0"/>
+                <properties>
+                    <property-collection name="41647cce-7750-46ec-ac0c-fa5a91f4e593">
+                        <property name="choice.otherwise" value="true"/>
+                        <property-collection name="choice.attributes"/>
+                    </property-collection>
+                    <property-collection name="004e4f13-1e28-412a-b0ed-1f91d505afba">
+                        <property name="choice.expression" value="&quot;mock&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="&quot;mock&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
+                        </property-collection>
+                    </property-collection>
+                    <property-collection name="7b95d810-8c8a-4555-9ea0-850307579e48">
+                        <property name="choice.expression" value="&quot;csd&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="&quot;csd&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
+                        </property-collection>
+                    </property-collection>
+                    <property-collection name="35193403-42d3-4d4d-8ad0-74be7b5ce46e">
+                        <property name="choice.expression" value="&quot;openldap&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="&quot;openldap&quot;.equals(&quot;${pr.denormalization}&quot;)"/>
+                        </property-collection>
+                    </property-collection>
+                </properties>
+                <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
+                <compartment entity-id="compartment#1">
+                    <lane hadOnlyOneElement="false" index="6" isChoiceOtherwiseLane="false" entity-id="35193403-42d3-4d4d-8ad0-74be7b5ce46e">
+                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#1">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="message" value="Routing resolve provider id request to OpenLDAP denormalization"/>
+<property name="category"/>
+<property name="level" value="INFO"/>
+<property name="auxiliary;index" value="6"/>
+                            </properties>
+                        </pattern>
+                        <endpoint direction="Outbound" message-exchange-pattern="OneWay" name="OpenLDAP" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#2">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="businessEventsLabel"/>
+<property name="disableTransportTransformer"/>
+<property name="exchange-pattern" value="request-response"/>
+<property name="tracking:enable-default-events"/>
+<property name="ref"/>
+<property name="transformer-refs"/>
+<property name="address"/>
+<property name="path" value="resolveproviderid-openldap"/>
+<property name="encoding"/>
+<property name="responseTransformer-refs"/>
+<property name="auxiliary;index" value="7"/>
+<property name="responseTimeout"/>
+<property name="mimeType"/>
+<property name="connector-ref"/>
+                            </properties>
+                        </endpoint>
+                        <pattern name="Copy success status" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#1">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="scope"/>
+<property name="overwrite"/>
+<property name="encoding"/>
+<property name="auxiliary;index" value="8"/>
+<property name="mimeType"/>
+<property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
+    <property name="value" value="#[message.inboundProperties['success']]"/>
+    <property name="key" value="success"/>
+    <property name="auxiliary;index" value="9"/>
+    <property name="auxiliary;wrapIn" value="9"/>
+</property-collection>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="11" isChoiceOtherwiseLane="false" entity-id="7b95d810-8c8a-4555-9ea0-850307579e48">
+                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#2">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="message" value="Routing resolve provider id request to CSD denormalization"/>
+<property name="category"/>
+<property name="level" value="INFO"/>
+<property name="auxiliary;index" value="11"/>
+                            </properties>
+                        </pattern>
+                        <endpoint direction="Outbound" message-exchange-pattern="OneWay" name="CSD" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#3">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="businessEventsLabel"/>
+<property name="disableTransportTransformer"/>
+<property name="exchange-pattern" value="request-response"/>
+<property name="tracking:enable-default-events"/>
+<property name="ref"/>
+<property name="transformer-refs"/>
+<property name="address"/>
+<property name="path" value="resolveproviderid-csd"/>
+<property name="encoding"/>
+<property name="responseTransformer-refs"/>
+<property name="auxiliary;index" value="12"/>
+<property name="responseTimeout"/>
+<property name="mimeType"/>
+<property name="connector-ref"/>
+                            </properties>
+                        </endpoint>
+                        <pattern name="Copy success status" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#2">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="scope"/>
+<property name="overwrite"/>
+<property name="encoding"/>
+<property name="auxiliary;index" value="13"/>
+<property name="mimeType"/>
+<property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
+    <property name="value" value="#[message.inboundProperties['success']]"/>
+    <property name="key" value="success"/>
+    <property name="auxiliary;index" value="14"/>
+    <property name="auxiliary;wrapIn" value="14"/>
+</property-collection>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="false" entity-id="004e4f13-1e28-412a-b0ed-1f91d505afba">
+                        <pattern name="Logger" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#3">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="message" value="Routing resolve provider id request to Mock denormalization"/>
+<property name="category"/>
+<property name="level" value="INFO"/>
+<property name="auxiliary;index" value="16"/>
+                            </properties>
+                        </pattern>
+                        <endpoint direction="Outbound" message-exchange-pattern="OneWay" name="Mock" type="http://www.mulesoft.org/schema/mule/vm/endpoint" entity-id="VM#4">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="businessEventsLabel"/>
+<property name="disableTransportTransformer"/>
+<property name="exchange-pattern" value="request-response"/>
+<property name="tracking:enable-default-events"/>
+<property name="ref"/>
+<property name="transformer-refs"/>
+<property name="address"/>
+<property name="path" value="resolveproviderid-mock"/>
+<property name="encoding"/>
+<property name="responseTransformer-refs"/>
+<property name="auxiliary;index" value="17"/>
+<property name="responseTimeout"/>
+<property name="mimeType"/>
+<property name="connector-ref"/>
+                            </properties>
+                        </endpoint>
+                        <pattern name="Copy success status" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#3">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="scope"/>
+<property name="overwrite"/>
+<property name="encoding"/>
+<property name="auxiliary;index" value="18"/>
+<property name="mimeType"/>
+<property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
+    <property name="value" value="#[message.inboundProperties['success']]"/>
+    <property name="key" value="success"/>
+    <property name="auxiliary;index" value="19"/>
+    <property name="auxiliary;wrapIn" value="19"/>
+</property-collection>
+                            </properties>
+                        </pattern>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="21" isChoiceOtherwiseLane="true" entity-id="41647cce-7750-46ec-ac0c-fa5a91f4e593">
+                        <pattern name="Invalid Option" type="http://www.mulesoft.org/schema/mule/core/logger" entity-id="Logger#4">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="message" value="An invalid option was set for the setting pr.denormalization"/>
+<property name="category"/>
+<property name="level" value="ERROR"/>
+<property name="auxiliary;index" value="21"/>
+                            </properties>
+                        </pattern>
+                        <pattern name="Set success status" type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" entity-id="Message Properties#4">
+                            <graphicalData x="0" y="0" width="0" height="0"/>
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="scope"/>
+<property name="overwrite"/>
+<property name="encoding"/>
+<property name="auxiliary;index" value="22"/>
+<property name="mimeType"/>
+<property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
+    <property name="value" value="false"/>
+    <property name="key" value="success"/>
+    <property name="auxiliary;index" value="23"/>
+    <property name="auxiliary;wrapIn" value="23"/>
+</property-collection>
+                            </properties>
+                        </pattern>
+                    </lane>
+                </compartment>
+            </splitter>
+        </lane>
+    </flow>
+    <description>Cross reference a provider identifier against the Provider Registry.
+
+The flow exposes a vm endpoint &quot;resolveproviderid&quot; that expects a map with values for the following keys:
+- &quot;idType&quot;: The type of id
+- &quot;id&quot;: The id value
+- &quot;targetIdType&quot;: The type of id to resolve to
+
+The value of the resolved id will be returned in the message payload.</description>
+</mule-configuration>
